@@ -197,5 +197,5 @@ Replacing `<YOUR_SDK_KEY>` with the SDK Key you wish to use.
 ## FAQ
 
 Do you have an iOS version?
->Yes! You can find it here TODO add link when we have public repo
+>Yes! You can find it [here](https://github.com/mailchimp/Mailchimp-SDK-iOS)
 
