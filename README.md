@@ -18,7 +18,7 @@ Create and update your Mailchimp contacts from your Android app. The Mailchimp S
 
 ### Retrieving SDK Key
 
-* TODO Update this when we finalize how to get the key
+Coming Soon
 
 ### Initializing the SDK
 
@@ -179,7 +179,7 @@ See the [Mailchimp GDPR Tutorial](https://mailchimp.com/help/collect-consent-wit
 ```
 
 #### Retrieving Marketing Permission Keys
-TODO we need to add this in for the beta release
+Coming Soon
 
 ## Demo App
 
