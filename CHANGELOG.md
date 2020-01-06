@@ -1,15 +1,11 @@
 # Changelog
+All notable changes to this project will be documented in this file.
 
-All changes will be tracked here. This should be updated with our first release before we open up to the public.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - ????-??-??
-
+## [0.1.0] - 2020-01-06
 ### Added
-- Added support to add and update contacts
-- Added support to register an event
-
-### Changed
-- Start using "changelog" over "change log" since it's the common usage.
-
-### Removed
-- Section about "changelog" vs "CHANGELOG".
+- Create or update Contacts in an Audience
+- Add and remove tags and merge fields from Contacts
+- Track events for Contacts
