@@ -1,11 +1,8 @@
-
+# Coming Soon
 
 [<img width="250" height="119" src="https://developer.mailchimp.com/documentation/mailchimp/img/lockup.svg"/>](http://www.mailchimp.com)
 
-# Deprecated
-Please use the [public README](https://github.com/mailchimp/Mailchimp-SDK-Android) for the most up to date information
-
-# ~Mailchimp Android SDK~
+# Mailchimp Android SDK
 
 Create and update your Mailchimp contacts from your Android app. The Mailchimp SDK allows you to,
 * Add new users straight to your audience
@@ -21,7 +18,7 @@ Create and update your Mailchimp contacts from your Android app. The Mailchimp S
 
 ### Retrieving SDK Key
 
-* TODO Update this when we finalize how to get the key
+Coming Soon
 
 ### Initializing the SDK
 
@@ -182,7 +179,7 @@ See the [Mailchimp GDPR Tutorial](https://mailchimp.com/help/collect-consent-wit
 ```
 
 #### Retrieving Marketing Permission Keys
-TODO we need to add this in for the beta release
+Coming Soon
 
 ## Demo App
 
@@ -200,5 +197,5 @@ Replacing `<YOUR_SDK_KEY>` with the SDK Key you wish to use.
 ## FAQ
 
 Do you have an iOS version?
->Yes! You can find it here TODO add link when we have public repo
+>Yes! You can find it [here](https://github.com/mailchimp/Mailchimp-SDK-iOS)
 
