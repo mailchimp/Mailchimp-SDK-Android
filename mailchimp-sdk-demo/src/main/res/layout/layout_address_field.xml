@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Licensed under the Mailchimp Mobile SDK License Agreement (the "License");
+  ~ you may not use this file except in compliance with the License. Unless
+  ~ required by applicable law or agreed to in writing, software distributed
+  ~ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+  ~ OR CONDITIONS OF ANY KIND, either or express or implied.
+  ~
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/address_merge_field"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_key_AFL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/key"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_label">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_key_AFL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_line_one_AFL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/line_one"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_key_AFL">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_line_one_AFL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_line_two_AFL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/line_two"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_line_one_AFL">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_line_two_AFL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_city_AFL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/city"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/til_state_AFL"
+        app:layout_constraintTop_toBottomOf="@id/til_line_two_AFL">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_city_AFL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_state_AFL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/state"
+        app:layout_constraintBottom_toBottomOf="@id/til_city_AFL"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/til_city_AFL"
+        app:layout_constraintTop_toTopOf="@id/til_city_AFL">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_state_AFL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spnr_country"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/til_zip_AFL"
+        app:layout_constraintEnd_toStartOf="@id/til_zip_AFL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/til_zip_AFL" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_zip_AFL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/zip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/spnr_country"
+        app:layout_constraintTop_toBottomOf="@id/til_state_AFL">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_zip_AFL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_remove_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:text="@string/remove_address_merge_field"
+        android:textColor="@color/kale"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spnr_country" />
+
+</merge>

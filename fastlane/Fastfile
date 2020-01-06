@@ -1,0 +1,79 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Publish a new version to our artifact repo"
+  lane :publish do |args|
+    gradle(task: "clean assembleRelease")
+
+    branch = if args[:branch].nil?
+                "/error"
+                UI.error "Version not provided through argument or environment variable. Try running: `fastlane publish version:MAJOR.MINOR.PATCH` or setting the environment variable named MAILCHIMP_SDK_VERSION, where MAJOR.MINOR.PATCH represents the version number."
+             else
+               args[:branch]
+             end
+    branch = branch.split('/')
+    version = branch.last
+
+    set_github_release(
+        repository_name: "mailchimp/Mailchimp-SDK-Android-Internal",
+        api_token: ENV["GITHUB_TOKEN"],
+        name: version,
+        description: "default",
+        tag_name: version
+   )
+  end
+
+  desc "Build the sdk and package the aar"
+  lane :build_and_package do
+    gradle(task: "clean assembleRelease")
+  end
+
+  desc "Build debug and android test"
+  lane :build_ui_tests do
+    gradle(task: "clean assembleDebug")
+    gradle(task: "assembleDebugAndroidTest")
+  end
+ 
+  def is_bitrise_ci_build?
+    # Bitrise Env Variables - https://devcenter.bitrise.io/faq/available-environment-variables/
+    ENV["CI"] == "true"
+  end
+
+  error do |lane, exception|
+    notify(
+      message: ":sad-bruno: *Mailchimp SDK Build Failure:* :sad-bruno: \n #{exception.message}",
+      status: false
+    )
+  end
+
+  def notify(message:, status: true, payload: nil)
+    UI.message "message: #{message}\nstatuss: #{status}\npayload: #{payload}"
+    return unless ENV["SLACK_URL"]
+    params = {message: message, success: status}
+    params[:payload] = payload if payload
+    slack(params)
+  end
+
+end
+
+
