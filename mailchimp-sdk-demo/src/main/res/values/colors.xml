@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Licensed under the Mailchimp Mobile SDK License Agreement (the "License");
+  ~ you may not use this file except in compliance with the License. Unless
+  ~ required by applicable law or agreed to in writing, software distributed
+  ~ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+  ~ OR CONDITIONS OF ANY KIND, either or express or implied.
+  ~
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="kale">#007C89</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_a70">#70FFFFFF</color>
+    <color name="elephant">#66241C15</color>
+    <color name="underline_gray">#757575</color>
+    <color name="black">#000000</color>
+    <color name="black_a30">#30000000</color>
+
+    <color name="transparent">#00FFFFFF</color>
+</resources>

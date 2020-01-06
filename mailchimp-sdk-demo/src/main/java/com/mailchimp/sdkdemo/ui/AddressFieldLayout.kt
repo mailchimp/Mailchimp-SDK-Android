@@ -1,0 +1,107 @@
+/*
+ * Licensed under the Mailchimp Mobile SDK License Agreement (the "License");
+ * you may not use this file except in compliance with the License. Unless
+ * required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND, either or express or implied.
+ *
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.mailchimp.sdkdemo.ui
+
+import android.content.Context
+import android.content.res.TypedArray
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ArrayAdapter
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.mailchimp.sdk.api.model.mergefields.Address
+import com.mailchimp.sdk.api.model.mergefields.Country
+import com.mailchimp.sdkdemo.R
+import kotlinx.android.synthetic.main.layout_address_field.view.*
+
+class AddressFieldLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
+
+    init {
+        val inflater = LayoutInflater.from(context)
+        inflater.inflate(R.layout.layout_address_field, this, true)
+
+        val adapter = ArrayAdapter<Country>(context, R.layout.country_spinner_item)
+        adapter.setDropDownViewResource(R.layout.spinner_drop_down)
+        adapter.addAll(Country.values().toList())
+        spnr_country.adapter = adapter
+    }
+
+    val removeButton = btn_remove_field
+
+    val key: String
+        get() {
+            return tiet_key_AFL.text.toString().trim()
+        }
+
+    val lineOne: String
+        get() {
+            return tiet_line_one_AFL.text.toString().trim()
+        }
+
+    val lineTwo: String
+        get() {
+            return tiet_line_two_AFL.text.toString().trim()
+        }
+
+    val city: String
+        get() {
+            return tiet_city_AFL.text.toString().trim()
+        }
+
+    val state: String
+        get() {
+            return tiet_state_AFL.text.toString().trim()
+        }
+
+    val country: Country
+        get() {
+            return spnr_country.selectedItem as Country
+        }
+
+    val zip: String
+        get() {
+            return tiet_zip_AFL.text.toString().trim()
+        }
+
+    val address: Address?
+        get() {
+            if (lineOne.isEmpty() || city.isEmpty() || zip.isEmpty()) {
+                return null
+            }
+
+            val builder = Address.Builder(lineOne, city, zip)
+            var fieldSet = false
+            fieldSet = setAddressField(lineTwo) { builder.setAddressLineTwo(it) } || fieldSet
+            fieldSet = setAddressField(state) { builder.setState(it) } || fieldSet
+            builder.setCountry(country)
+            return if (!fieldSet) null else builder.build()
+        }
+
+    var removeButtonVisible = false
+        set(value) {
+            field = value
+            if (value) {
+                btn_remove_field.visibility = View.VISIBLE
+            } else {
+                btn_remove_field.visibility = View.GONE
+            }
+        }
+
+    private fun setAddressField(value: String, setter: (String) -> Address.Builder): Boolean {
+        return if (value.isNotBlank()) {
+            setter(value)
+            true
+        } else {
+            false
+        }
+    }
+}

@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="Mailchimp_SDK_License">
+    <module2copyright>
+      <element module="All" copyright="Mailchimp_SDK_License" />
+    </module2copyright>
+  </settings>
+</component>
