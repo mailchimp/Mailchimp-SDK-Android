@@ -1,0 +1,57 @@
+<!--
+  ~ Licensed under the Mailchimp Mobile SDK License Agreement (the "License");
+  ~ you may not use this file except in compliance with the License. Unless
+  ~ required by applicable law or agreed to in writing, software distributed
+  ~ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+  ~ OR CONDITIONS OF ANY KIND, either or express or implied.
+  ~
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">Mailchimp SDK Demo</string>
+    <string name="app_title">Mailchimp SDK Demo App</string>
+    <string name="email">Email</string>
+    <string name="event_name">Event Name</string>
+    <string name="sdk_key_text">SDK Key</string>
+    <string name="start">Start</string>
+    <string name="start_mock">Start Mock</string>
+    <string name="invalid_sdk_key_msg">Please enter an SDK Key</string>
+    <string name="create_contact">Create Contact</string>
+    <string name="create_event">Create Event</string>
+    <string name="autotag_contacts">Autotag Contacts</string>
+    <string name="debug_mode">Debug Mode</string>
+    <string name="add_pair">+ Another Pair</string>
+    <string name="add_tag_short">+ Tag</string>
+    <string name="add_tag">Add Tag</string>
+    <string name="add_merge_field_short">+ Merge Field</string>
+    <string name="add_address_field_short">+ Address</string>
+    <string name="remove_tag_short">- Tag</string>
+    <string name="remove_tag">Remove Tag</string>
+    <string name="set_merge_field">Set Merge Field</string>
+    <string name="x">X</string>
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+    <string name="address">Address</string>
+    <string name="address_merge_field">Address Merge Field</string>
+    <string name="line_one">Line One</string>
+    <string name="line_two">Line Two</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="zip">Zip</string>
+    <string name="contact_status">Contact Status</string>
+    <string name="add_marketing_permission">+ Marketing Permission</string>
+    <string name="set_marketing_permission">Set Marketing Permission</string>
+    <string name="permission">Permission</string>
+    <string name="granted">Granted:</string>
+    <string name="properties">Properties</string>
+    <string name="add_additional">Add Additional </string>
+    <string name="optional">(optional)</string>
+    <string name="colon">:</string>
+    <string name="remove_address_merge_field">Remove Address Merge Field</string>
+    <string name="remove_marketing_permission">Remove Marketing Permission</string>
+
+
+</resources>

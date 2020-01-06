@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Licensed under the Mailchimp Mobile SDK License Agreement (the "License");
+  ~ you may not use this file except in compliance with the License. Unless
+  ~ required by applicable law or agreed to in writing, software distributed
+  ~ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+  ~ OR CONDITIONS OF ANY KIND, either or express or implied.
+  ~
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_app_title"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:gravity="center_horizontal"
+            android:text="@string/app_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_sdk_key"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sdk_key_text" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_sdk_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cbx_autotag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/autotag_contacts" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cbx_debug"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/debug_mode" />
+
+        <Button
+            android:id="@+id/btn_start"
+            style="@style/button_primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/start" />
+
+        <Button
+            android:id="@+id/btn_start_mock"
+            style="@style/button_primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/start_mock" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
