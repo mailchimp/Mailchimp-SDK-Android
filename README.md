@@ -185,8 +185,8 @@ Coming Soon
 
 ### Adding an event
 
-To add an event associated with a contact, pass the email, event name and properties (optional) into the `addContactEvent` method. This will add the event to the specified contact.
-Unlike adding or updating contact information. Contact events requests will excecute immediately and will not be reattempted if they fail.
+To add an event associated with a contact, pass the email, event name, and properties (optional) into the `addContactEvent` method. This will add the event to the specified contact.
+Unlike adding or updating contact information, event requests will excecute immediately and will not be reattempted if they fail.
 
 ```kotlin
     val mailchimpSdk = Mailchimp.sharedInstance()
