@@ -181,6 +181,34 @@ See the [Mailchimp GDPR Tutorial](https://mailchimp.com/help/collect-consent-wit
 #### Retrieving Marketing Permission Keys
 Coming Soon
 
+## Collecting contact events
+
+### Adding an event
+
+To add an event associated with a contact, pass the email, event name, and properties (optional) into the `addContactEvent` method. This will add the event to the specified contact.
+Unlike adding or updating contact information, event requests will excecute immediately and will not be reattempted if they fail.
+
+```kotlin
+    val mailchimpSdk = Mailchimp.sharedInstance()
+    val eventProperties = mapOf("item_id" to "12894309543")
+    mailchimpSdk.addContactEvent("example@email.com", "User Browsed Item", eventProperties)
+```
+
+## Event Schema
+
+### Email
+
+The Email Address is the unique identifier for each contact in an audience. An email address is required for every interaction with the SDK.
+
+### Name
+
+Each event is identified using a String. The maximum length of an event name is 30 characters.
+
+### Properties
+
+Any event can have properties associated with it. These properties have a String key and String value. Property names are limited to A-z and underscores.
+Properties are passed into the request as a Map<String, String>, the former being the name and the latter being the value.
+
 ## Demo App
 
 ### Autofilling Demo SDK Key (Optional)
