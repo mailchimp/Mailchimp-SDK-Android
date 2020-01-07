@@ -207,7 +207,7 @@ Each event is identified using a String. The maximum length of an event name is 
 ### Properties
 
 Any event can have properties associated with it. These properties have a String key and String value. Property names are limited to A-z and underscores.
-Properties are passed into the request as a Map<String, String>, the former being they name and the latter being the value.
+Properties are passed into the request as a Map<String, String>, the former being the name and the latter being the value.
 
 ## Demo App
 
