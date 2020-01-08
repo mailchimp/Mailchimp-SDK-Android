@@ -54,8 +54,4 @@ public class MailchimpInitializeJavatest {
 
     assertNotNull(Mailchimp.sharedInstance());
   }
-  @Test
-  public void badTest() {
-    assertNotNull(null);
-  }
 }
