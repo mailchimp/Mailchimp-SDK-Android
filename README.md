@@ -179,7 +179,7 @@ See the [Mailchimp GDPR Tutorial](https://mailchimp.com/help/collect-consent-wit
 ```
 
 #### Retrieving Marketing Permission Keys
-Coming Soon
+Coming Soon Test
 
 ## Collecting contact events
 
