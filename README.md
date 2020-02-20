@@ -18,7 +18,7 @@ Create and update your Mailchimp contacts from your Android app. The Mailchimp S
 
 ### Retrieving SDK Key
 
-Coming Soon
+The Mailchimp SDK is currently in a private beta. If you'd like to join the beta send your Mailchimp username to [mobile-sdk@mailchimp.com](mailto:mobile-sdk@mailchimp.com?subject=I%27d%20like%20to%20join%20the%20Mailchimp%20SDK%20Private%20Beta).
 
 ### Adding The Mailchimp SDK to your Project
 
