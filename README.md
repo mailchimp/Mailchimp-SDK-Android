@@ -16,7 +16,7 @@ Create and update your Mailchimp contacts from your Android app. The Mailchimp S
 
 ### Retrieving SDK Key
 
-An SDK Key can be retrieved by following the instructions found [here](https://admin.mailchimp.com/account/client-key).
+See the [Mailchimp SDK documentation](https://mailchimp.com/developer/guides/mobile-sdk-android/#Step_1._Retrieve_the_SDK_Key) for details on retrieving a key.
 
 ### Adding The Mailchimp SDK to your Project
 
@@ -194,7 +194,8 @@ See the [Mailchimp GDPR Tutorial](https://mailchimp.com/help/collect-consent-wit
 ```
 
 #### Retrieving Marketing Permission Keys
-Coming Soon
+
+See the [Mailchimp SDK documentation](https://mailchimp.com/developer/guides/mobile-sdk-android-use/#Marketing_Permissions) for details on setting up marketing permissions.
 
 ## Collecting contact events
 
