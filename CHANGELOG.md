@@ -6,9 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2020-07-15
 ### Mailchimp SDK is now out of Beta.
-- Create or update Contacts in an Audience
-- Add and remove tags and merge fields from Contacts
-- Track events for Contacts
 
 ## [0.1.0] - 2020-01-06
 ### Added
