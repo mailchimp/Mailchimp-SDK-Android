@@ -32,7 +32,7 @@ repositories {
 Next add the Mailchimp SDK to your list of dependencies. Below is a gradle example
 
 ```gradle
-implementation 'com.github.mailchimp:Mailchimp-SDK-Android:0.1.0'
+implementation 'com.github.mailchimp:Mailchimp-SDK-Android:1.0.0'
 ```
 
 ### Initializing the SDK
