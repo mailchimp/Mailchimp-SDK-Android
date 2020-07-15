@@ -101,7 +101,7 @@ Single field update methods include
 
 ### Job Status and Work Manager
 
-The Mailchimp SDK uses [Google's Work Manager](https://developer.android.com/reference/androidx/work/WorkManager) to manager retry logic and job execution order.
+The Mailchimp SDK uses [Google's Work Manager](https://developer.android.com/reference/androidx/work/WorkManager) to manage retry logic and job execution order.
 This means that all operations guaranteed to execute regardless of network status and App Restart. In addition the order of execution is maintained so that multiple calls
 will execute in the correct order.
 
