@@ -1,6 +1,3 @@
-# Interested in joining our beta?
-The Mailchimp SDK is currently in a private beta. If you'd like to join the beta send your Mailchimp username to [mobile-sdk@mailchimp.com](mailto:mobile-sdk@mailchimp.com?subject=I%27d%20like%20to%20join%20the%20Mailchimp%20SDK%20Private%20Beta).
-
 [<img width="250" height="119" src="https://developer.mailchimp.com/documentation/mailchimp/img/lockup.svg"/>](http://www.mailchimp.com)
 
 # Mailchimp Android SDK
@@ -19,7 +16,7 @@ Create and update your Mailchimp contacts from your Android app. The Mailchimp S
 
 ### Retrieving SDK Key
 
-The Mailchimp SDK is currently in a private beta. If you'd like to join the beta send your Mailchimp username to [mobile-sdk@mailchimp.com](mailto:mobile-sdk@mailchimp.com?subject=I%27d%20like%20to%20join%20the%20Mailchimp%20SDK%20Private%20Beta).
+See the [Mailchimp SDK documentation](https://mailchimp.com/developer/guides/mobile-sdk-android/#Step_1._Retrieve_the_SDK_Key) for details on retrieving a key.
 
 ### Adding The Mailchimp SDK to your Project
 
@@ -35,7 +32,7 @@ repositories {
 Next add the Mailchimp SDK to your list of dependencies. Below is a gradle example
 
 ```gradle
-implementation 'com.github.mailchimp:Mailchimp-SDK-Android:0.1.0'
+implementation 'com.github.mailchimp:Mailchimp-SDK-Android:1.0.0'
 ```
 
 ### Initializing the SDK
@@ -104,7 +101,7 @@ Single field update methods include
 
 ### Job Status and Work Manager
 
-The Mailchimp SDK uses [Google's Work Manager](https://developer.android.com/reference/androidx/work/WorkManager) to manager retry logic and job execution order.
+The Mailchimp SDK uses [Google's Work Manager](https://developer.android.com/reference/androidx/work/WorkManager) to manage retry logic and job execution order.
 This means that all operations guaranteed to execute regardless of network status and App Restart. In addition the order of execution is maintained so that multiple calls
 will execute in the correct order.
 
@@ -197,7 +194,8 @@ See the [Mailchimp GDPR Tutorial](https://mailchimp.com/help/collect-consent-wit
 ```
 
 #### Retrieving Marketing Permission Keys
-Coming Soon
+
+See the [Mailchimp SDK documentation](https://mailchimp.com/developer/guides/mobile-sdk-android-use/#Marketing_Permissions) for details on setting up marketing permissions.
 
 ## Collecting contact events
 
