@@ -16,11 +16,11 @@ jobs:
         
         stale-issue-message: 'This issue is being marked as stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 5 days.'
         stale-issue-label: 'stale'
-        exempt-issue-labels: '' # Comma seperated list of labels that should be used to exempt an issue from being marked as stale or being closed
+        exempt-issue-labels: 'stale-exempt' # Comma seperated list of labels that should be used to exempt an issue from being marked as stale or being closed
         
         stale-pr-message: 'This Pull Request is being marked as stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 5 days.'
         stale-pr-label: 'stale'
-        exempt-pr-labels: '' # Comma seperated list of labels that should be used to exempt a PR from being marked as stale or being closed
+        exempt-pr-labels: 'stale-exempt' # Comma seperated list of labels that should be used to exempt a PR from being marked as stale or being closed
         
         days-before-stale: 30
         days-before-close: 5
