@@ -132,7 +132,7 @@ data class Contact private constructor(
         fun removeTag(name: String) = apply { this.tags[name] = Tag(name, INACTIVE_TAG_STATUS) }
 
         /**
-         * Sets the Contact Status of the contact. The default value is [ContactStatus.SUBSCRIBED].
+         * Sets the Contact Status of the contact. The default value is [ContactStatus.TRANSACTIONAL].
          * This value is only used on initial creation of the object. If the contact already exists
          * this value will be ignored and will not update the ContactStatus of the Contact.
          *
