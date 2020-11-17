@@ -154,7 +154,7 @@ Merge fields are a set of key value pairs that can be set on each contact. They 
 The value of a merge field can be set and updated from the SDK. Merge fields are keyed off of a capitalized string. The Key does not include vertical bars on either end (ex. FNAME and not |FNAME|).
 
 * Merge fields can be located on audience settings page on the mailchimp website and are also listed out after sdk-key creation.
-* Merge Fields can be marked as required on the audience settings. If you attempt to create a contact without setting the required merge fields the creation will silently fail.
+* While Merge Fields can be marked as required on the audience settings, those requirements will not be enforced when using the Mailchimp SDK.
 
 #### String Merge Fields
 The majority of merge field types are represented as a string. This includes Text, Number, Radio Buttons, Drop Downs, Dates, Birthday, Phone Numbers, and Websites.
