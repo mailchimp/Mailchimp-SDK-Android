@@ -1,4 +1,8 @@
-[<img width="250" height="119" src="https://developer.mailchimp.com/documentation/mailchimp/img/lockup.svg"/>](http://www.mailchimp.com)
+<p align="center">
+  <a href="https://mailchimp.com/developer/">
+    <img src="https://raw.githubusercontent.com/mailchimp/mailchimp-client-lib-codegen/master/resources/images/mcdev-banner.png" alt="Mailchimp Developer" width="100%" height="auto">
+  </a>
+</p>
 
 # Mailchimp Android SDK
 
