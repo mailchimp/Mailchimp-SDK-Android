@@ -123,7 +123,7 @@ if (status == WorkStatus.FINISHED) {
 ```kotlin
 val uuid = sdk.addTag("example@user.com", "ExampleTag")
 val statusLiveData = sdk.getStatusByIdLiveData(uuid)
-statusListData.observe(
+statusLiveData.observe(
             this
             Observer {
                 Toast.makeText(this, "Current Job Status: $it", Toast.LENGTH_SHORT).show()
@@ -161,7 +161,7 @@ Merge Fields of type address are not represented as a string and instead receive
 In addition there are three optional fields, Address Line Two, State, and Country. Below is an example of an Address object.
 
 ```kotlin
-    val address = Address.Builder("404 Main St.", Atlanta, "30308")
+    val address = Address.Builder("404 Main St.", "Atlanta", "30308")
             .setAddressLineTwo("apt. 101")
             .setState("Georgia")
             .setCountry(Country.USA)
