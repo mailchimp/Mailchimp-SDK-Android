@@ -1,4 +1,8 @@
-[<img width="250" height="119" src="https://developer.mailchimp.com/documentation/mailchimp/img/lockup.svg"/>](http://www.mailchimp.com)
+<p align="center">
+  <a href="https://mailchimp.com/developer/">
+    <img src="https://raw.githubusercontent.com/mailchimp/mailchimp-client-lib-codegen/master/resources/images/mcdev-banner.png" alt="Mailchimp Developer" width="100%" height="auto">
+  </a>
+</p>
 
 # Mailchimp Android SDK
 
@@ -123,7 +127,7 @@ if (status == WorkStatus.FINISHED) {
 ```kotlin
 val uuid = sdk.addTag("example@user.com", "ExampleTag")
 val statusLiveData = sdk.getStatusByIdLiveData(uuid)
-statusListData.observe(
+statusLiveData.observe(
             this
             Observer {
                 Toast.makeText(this, "Current Job Status: $it", Toast.LENGTH_SHORT).show()
@@ -150,7 +154,7 @@ Merge fields are a set of key value pairs that can be set on each contact. They 
 The value of a merge field can be set and updated from the SDK. Merge fields are keyed off of a capitalized string. The Key does not include vertical bars on either end (ex. FNAME and not |FNAME|).
 
 * Merge fields can be located on audience settings page on the mailchimp website and are also listed out after sdk-key creation.
-* Merge Fields can be marked as required on the audience settings. If you attempt to create a contact without setting the required merge fields the creation will silently fail.
+* While Merge Fields can be marked as required on the audience settings, those requirements will not be enforced when using the Mailchimp SDK.
 
 #### String Merge Fields
 The majority of merge field types are represented as a string. This includes Text, Number, Radio Buttons, Drop Downs, Dates, Birthday, Phone Numbers, and Websites.
@@ -161,7 +165,7 @@ Merge Fields of type address are not represented as a string and instead receive
 In addition there are three optional fields, Address Line Two, State, and Country. Below is an example of an Address object.
 
 ```kotlin
-    val address = Address.Builder("404 Main St.", Atlanta, "30308")
+    val address = Address.Builder("404 Main St.", "Atlanta", "30308")
             .setAddressLineTwo("apt. 101")
             .setState("Georgia")
             .setCountry(Country.USA)
