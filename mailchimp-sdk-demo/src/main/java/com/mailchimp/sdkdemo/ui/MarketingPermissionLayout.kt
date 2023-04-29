@@ -16,31 +16,31 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.mailchimp.sdkdemo.R
-import kotlinx.android.synthetic.main.layout_marketing_permission_field.view.*
+import com.mailchimp.sdkdemo.databinding.LayoutMarketingPermissionFieldBinding
 
 class MarketingPermissionLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
-    init {
-        val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.layout_marketing_permission_field, this, true)
-    }
 
-    val removeButton = btn_remove_field
+    private val binding = LayoutMarketingPermissionFieldBinding.inflate(LayoutInflater.from(context), this)
+
+    val removeButton = binding.btnRemoveField
+
     val isPermissionGranted: Boolean
         get() {
-            return sc_value.isChecked
+            return binding.scValue.isChecked
         }
+
     val permission: String
         get() {
-            return tiet_key_MPFL.text.toString().trim()
+            return binding.tietKeyMPFL.text.toString().trim()
         }
+
     var removeButtonVisible = false
         set(value) {
             field = value
-            if (value) {
-                btn_remove_field.visibility = View.VISIBLE
+            binding.btnRemoveField.visibility = if (value) {
+                View.VISIBLE
             } else {
-                btn_remove_field.visibility = View.GONE
+                View.GONE
             }
         }
 }

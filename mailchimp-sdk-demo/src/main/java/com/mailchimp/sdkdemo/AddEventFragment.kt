@@ -18,8 +18,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.mailchimp.sdk.main.Mailchimp
+import com.mailchimp.sdkdemo.databinding.FragmentAddEventBinding
 import com.mailchimp.sdkdemo.ui.KeyValueLayout
-import kotlinx.android.synthetic.main.fragment_add_event.*
 import timber.log.Timber
 
 class AddEventFragment : Fragment() {
@@ -27,29 +27,44 @@ class AddEventFragment : Fragment() {
     private val mailchimpSdk = Mailchimp.sharedInstance()
     private val propertiesCellList = mutableListOf<KeyValueLayout>()
 
+    private var _binding: FragmentAddEventBinding? = null
+
+    /**
+     * This property is only valid between onCreateView and onDestroyView.
+     */
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_add_event, container, false)
+    ): View {
+        return FragmentAddEventBinding.inflate(inflater, container, false).let {
+            _binding = it
+            it.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_add_pair.setOnClickListener { appendPropertyCell() }
-        btn_create_event.setOnClickListener { addEvent() }
+        binding.btnAddPair.setOnClickListener { appendPropertyCell() }
+        binding.btnCreateEvent.setOnClickListener { addEvent() }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun addEvent() {
-        val email = nfl_email_FAE.value
+        val email = binding.nflEmailFAE.value
         if (email.isBlank()) {
-            Toast.makeText(context!!, "Please enter an Email", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter an Email", Toast.LENGTH_SHORT).show()
             return
         }
-        val eventName = nfl_event_name_FAE.value
+        val eventName = binding.nflEventNameFAE.value
         if (eventName.isBlank()) {
-            Toast.makeText(context!!, "Please enter an Event Name", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter an Event Name", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -60,12 +75,11 @@ class AddEventFragment : Fragment() {
             val propertyValue = view.value
             if (propertyName.isBlank() && propertyValue.isBlank()) {
                 Timber.i("Ignoring empty property")
-            }
-            else if (propertyName.isBlank() || propertyValue.isBlank()) {
-                Toast.makeText(context!!, "Property names and values cannot be empty", Toast.LENGTH_SHORT).show()
+            } else if (propertyName.isBlank() || propertyValue.isBlank()) {
+                Toast.makeText(requireContext(), "Property names and values cannot be empty", Toast.LENGTH_SHORT).show()
                 return
             } else {
-                properties.put(view.key, view.value)
+                properties[view.key] = view.value
             }
         }
 
@@ -78,7 +92,7 @@ class AddEventFragment : Fragment() {
 
         if (eventId == null) {
             Toast.makeText(
-                context!!,
+                requireContext(),
                 "Malformed request: Check logs to see a more detailed error",
                 Toast.LENGTH_SHORT
             ).show()
@@ -86,17 +100,15 @@ class AddEventFragment : Fragment() {
         }
 
         val liveData = mailchimpSdk.getStatusByIdLiveData(eventId)
-        liveData.observe(
-            this@AddEventFragment,
-            androidx.lifecycle.Observer {
-                Toast.makeText(context!!, "Work: $it", Toast.LENGTH_SHORT).show()
-            })
+        liveData.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "Work: $it", Toast.LENGTH_SHORT).show()
+        }
 
         clearAddedCells()
     }
 
     private fun appendPropertyCell() {
-        val newLayout = KeyValueLayout(context!!, null)
+        val newLayout = KeyValueLayout(requireContext(), null)
         newLayout.removeButtonVisible = true
         newLayout.setKeyHint(getString(R.string.key))
         newLayout.setValueHint(getString(R.string.value))
@@ -107,16 +119,16 @@ class AddEventFragment : Fragment() {
             )
         }
         propertiesCellList.add(newLayout)
-        ll_add_on_fields_FAE.addView(newLayout)
+        binding.llAddOnFieldsFAE.addView(newLayout)
     }
 
     private fun clearAddedCells() {
         propertiesCellList.clear()
-        ll_add_on_fields_FAE.removeAllViews()
+        binding.llAddOnFieldsFAE.removeAllViews()
     }
 
     private fun <T : View> removeView(view: T, list: MutableList<T>) {
-        ll_add_on_fields_FAE.removeView(view)
+        binding.llAddOnFieldsFAE.removeView(view)
         list.remove(view)
     }
 }

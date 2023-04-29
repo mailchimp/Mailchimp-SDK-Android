@@ -16,54 +16,62 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import kotlinx.android.synthetic.main.fragment_home.*
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
+import com.mailchimp.sdkdemo.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private lateinit var pagerAdapter: HomeFragmentPagerAdapter
+    private var _binding: FragmentHomeBinding? = null
+
+    /**
+     * This property is only valid between onCreateView and onDestroyView.
+     */
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        return FragmentHomeBinding.inflate(inflater, container, false).let {
+            _binding = it
+            it.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        pagerAdapter = HomeFragmentPagerAdapter(fragmentManager!!)
-        view_pager_FH.adapter = pagerAdapter
-        tab_layout_FH.setupWithViewPager(view_pager_FH)
-
+        binding.viewPagerFH.adapter = HomeFragmentPagerAdapter(this)
+        TabLayoutMediator(binding.tabLayoutFH, binding.viewPagerFH) { tab, position ->
+            tab.text = HomeFragmentPagerAdapter.HomeTabs.values()[position].tabName
+        }.attach()
     }
 
-}
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-class HomeFragmentPagerAdapter(fragmentManager: FragmentManager) :
-    FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    override fun getItem(position: Int): Fragment {
-        val tab = HomeTabs.values()[position]
-        return when (tab) {
-            HomeTabs.ADD_CONTACT -> AddContactFragment()
-            HomeTabs.ADD_EVENT -> AddEventFragment()
+    private class HomeFragmentPagerAdapter(fragment: Fragment) :
+        FragmentStateAdapter(fragment) {
+
+        enum class HomeTabs(val tabName: String) {
+            ADD_CONTACT("Add Contact"),
+            ADD_EVENT("Add Event")
         }
+
+        override fun getItemCount(): Int {
+            return HomeTabs.values().size
+        }
+
+        override fun createFragment(position: Int): Fragment {
+            return when (HomeTabs.values()[position]) {
+                HomeTabs.ADD_CONTACT -> AddContactFragment()
+                HomeTabs.ADD_EVENT -> AddEventFragment()
+            }
+        }
+
     }
-
-    override fun getCount(): Int {
-        return HomeTabs.values().size
-    }
-
-    override fun getPageTitle(position: Int): CharSequence {
-        return HomeTabs.values()[position].tabName
-    }
-
-}
-
-enum class HomeTabs(val tabName: String) {
-    ADD_CONTACT("Add Contact"),
-    ADD_EVENT("Add Event")
 }

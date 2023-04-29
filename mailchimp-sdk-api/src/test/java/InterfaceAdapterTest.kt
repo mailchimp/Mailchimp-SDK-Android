@@ -95,7 +95,8 @@ class InterfaceAdapterTest {
         val adapter = GsonInterfaceAdapter<MergeFieldValue>(standardTypeDecoder())
         val mergeField = StringMergeFieldValue("Jabroni")
 
-        val serialized = adapter.serialize(mergeField, StringMergeFieldValue::class.java, GsonContextImpl()) as JsonObject
+        val serialized =
+            adapter.serialize(mergeField, StringMergeFieldValue::class.java, GsonContextImpl()) as JsonObject
         assertEquals("Jabroni", serialized.get("value").asString)
         assertEquals("string", serialized.get("type").asString)
     }

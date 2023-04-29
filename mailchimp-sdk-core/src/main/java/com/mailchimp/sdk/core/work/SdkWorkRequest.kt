@@ -11,7 +11,11 @@
 
 package com.mailchimp.sdk.core.work
 
-import androidx.work.*
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
 import java.util.concurrent.TimeUnit
 
 abstract class SdkWorkRequest {

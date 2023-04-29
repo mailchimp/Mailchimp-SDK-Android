@@ -12,49 +12,47 @@
 package com.mailchimp.sdkdemo.ui
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.google.android.material.textfield.TextInputLayout
+import androidx.core.content.withStyledAttributes
 import com.mailchimp.sdkdemo.R
-import kotlinx.android.synthetic.main.layout_named_field.view.*
+import com.mailchimp.sdkdemo.databinding.LayoutNamedFieldBinding
 
 class NamedFieldLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
-    var label: String? = null
-        set(value) {
-            til_NFL.hint = value
-            field = value
-        }
+
+    private val binding = LayoutNamedFieldBinding.inflate(LayoutInflater.from(context), this)
 
     init {
-        val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.layout_named_field, this, true)
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        var typedArray: TypedArray? = null
-        try {
-            typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.NamedFieldLayout, 0, 0)
-            label = typedArray.getString(R.styleable.NamedFieldLayout_label)
-        } finally {
-            typedArray?.recycle()
+        context.withStyledAttributes(attrs, R.styleable.NamedFieldLayout) {
+            binding.tilNFL.hint = getString(R.styleable.NamedFieldLayout_label)
         }
     }
 
-    val removeButton = btn_remove_field
+    val removeButton = binding.btnRemoveField
+
     val value: String
         get() {
-            return tiet_NFL.text.toString().trim()
+            return binding.tietNFL.text.toString().trim()
         }
+
     var removeButtonVisible = false
         set(value) {
             field = value
-            if (value) {
-                btn_remove_field.visibility = View.VISIBLE
+            binding.btnRemoveField.visibility = if (value) {
+                View.VISIBLE
             } else {
-                btn_remove_field.visibility = View.GONE
+                View.GONE
             }
+        }
+
+    var label: String?
+        get() = binding.tilNFL.hint?.toString()
+        set(value) {
+            binding.tilNFL.hint = value
         }
 }

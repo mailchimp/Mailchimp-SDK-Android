@@ -15,25 +15,24 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.mailchimp.sdk.core.work.SdkWorker
-import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations.initMocks
-import java.lang.Exception
-import java.lang.IllegalStateException
+import org.mockito.MockitoAnnotations.openMocks
+import org.mockito.kotlin.whenever
 
 class SdkWorkerTest {
 
     @Mock
     private lateinit var context: Context
+
     @Mock
     private lateinit var workParams: WorkerParameters
 
     @Before
     fun setup() {
-        initMocks(this)
+        openMocks(this)
     }
 
     @Test
@@ -79,12 +78,15 @@ class SdkWorkerTest {
     }
 }
 
-class TestSdkWorker(private val response: Response, context: Context, workParams: WorkerParameters) : SdkWorker(context, workParams) {
+class TestSdkWorker(private val response: Response, context: Context, workParams: WorkerParameters) :
+    SdkWorker(context, workParams) {
     override fun performWork(): Response {
         return response
     }
 }
-class TestSdkWorkerException(private val exception: Exception, context: Context, workParams: WorkerParameters) : SdkWorker(context, workParams) {
+
+class TestSdkWorkerException(private val exception: Exception, context: Context, workParams: WorkerParameters) :
+    SdkWorker(context, workParams) {
     override fun performWork(): Response {
         throw exception
     }

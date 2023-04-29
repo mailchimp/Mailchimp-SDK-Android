@@ -14,26 +14,34 @@ package com.mailchimp.sdk.api.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mailchimp.sdk.api.ApiAuthInterceptor
-import com.mailchimp.sdk.api.SdkWebService
 import com.mailchimp.sdk.api.RetrofitBuilder
+import com.mailchimp.sdk.api.SdkWebService
 import com.mailchimp.sdk.api.gson.BasicGsonTypeDecoder
 import com.mailchimp.sdk.api.gson.GsonInterfaceAdapter
+import com.mailchimp.sdk.api.model.mergefields.Address
+import com.mailchimp.sdk.api.model.mergefields.MergeFieldValue
+import com.mailchimp.sdk.api.model.mergefields.StringMergeFieldValue
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-import com.mailchimp.sdk.api.model.mergefields.*
-import okhttp3.logging.HttpLoggingInterceptor
 
 interface ApiDependencies {
     val sdkWebService: SdkWebService
     val gson: Gson
 }
 
-open class ApiImplementation(private val sdkKey: String, private val shard: String, private val isDebug: Boolean) : ApiDependencies {
-    override val gson: Gson by lazy { GsonBuilder().registerTypeAdapter(MergeFieldValue::class.java, mergeFieldValueTypeAdapter).create() }
-    override val sdkWebService by lazy { retrofit.create(SdkWebService::class.java) }
+open class ApiImplementation(private val sdkKey: String, private val shard: String, private val isDebug: Boolean) :
+    ApiDependencies {
+    override val gson: Gson by lazy {
+        GsonBuilder().registerTypeAdapter(
+            MergeFieldValue::class.java,
+            mergeFieldValueTypeAdapter
+        ).create()
+    }
+    override val sdkWebService: SdkWebService by lazy { retrofit.create(SdkWebService::class.java) }
 
     // WebService Dependencies
     private val okHttpLoggingInterceptor by lazy {
@@ -52,7 +60,13 @@ open class ApiImplementation(private val sdkKey: String, private val shard: Stri
     }
 
     private val gsonConverterFactory: GsonConverterFactory by lazy { GsonConverterFactory.create(gson) }
-    private val retrofit: Retrofit by lazy { RetrofitBuilder().createInstance(shard, gsonConverterFactory, okHttpClient) }
+    private val retrofit: Retrofit by lazy {
+        RetrofitBuilder().createInstance(
+            shard,
+            gsonConverterFactory,
+            okHttpClient
+        )
+    }
 
     // Gson Dependencies
     private val mergeFieldValueTypeAdapter by Dependency { GsonInterfaceAdapter<MergeFieldValue>(mergeFieldTypeDecoder) }

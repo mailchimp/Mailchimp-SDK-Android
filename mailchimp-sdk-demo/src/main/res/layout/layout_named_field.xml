@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Licensed under the Mailchimp Mobile SDK License Agreement (the "License");
   ~ you may not use this file except in compliance with the License. Unless
   ~ required by applicable law or agreed to in writing, software distributed
@@ -16,13 +15,13 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_NFL"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_NFL"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -30,9 +29,9 @@
         android:id="@+id/btn_remove_field"
         android:layout_width="14dp"
         android:layout_height="14dp"
-        android:background="@drawable/ic_close_icon"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
+        android:background="@drawable/ic_close_icon"
         android:visibility="gone" />
 
 </merge>

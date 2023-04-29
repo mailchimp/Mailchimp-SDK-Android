@@ -16,50 +16,50 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.mailchimp.sdkdemo.R
-import kotlinx.android.synthetic.main.layout_key_value.view.*
+import com.mailchimp.sdkdemo.databinding.LayoutKeyValueBinding
 
 class KeyValueLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
-    init {
-        val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.layout_key_value, this, true)
-    }
+
+    private val binding = LayoutKeyValueBinding.inflate(LayoutInflater.from(context), this)
 
     var label: String? = null
         set(value) {
-            if (value != null && value.isNotEmpty()) {
-                tv_label_KVL.text = value
-                tv_label_KVL.visibility = View.VISIBLE
+            if (!value.isNullOrEmpty()) {
+                binding.tvLabelKVL.text = value
+                binding.tvLabelKVL.visibility = View.VISIBLE
             } else {
-                tv_label_KVL.visibility = View.GONE
+                binding.tvLabelKVL.visibility = View.GONE
             }
             field = value
         }
 
-    val removeButton = btn_remove_field
+    val removeButton = binding.btnRemoveField
+
     val value: String
         get() {
-            return tiet_value_KVL.text.toString().trim()
+            return binding.tietValueKVL.text.toString().trim()
         }
+
     val key: String
         get() {
-            return tiet_key_KVL.text.toString().trim()
+            return binding.tietKeyKVL.text.toString().trim()
         }
+
     var removeButtonVisible = false
         set(value) {
             field = value
             if (value) {
-                btn_remove_field.visibility = View.VISIBLE
+                binding.btnRemoveField.visibility = View.VISIBLE
             } else {
-                btn_remove_field.visibility = View.GONE
+                binding.btnRemoveField.visibility = View.GONE
             }
         }
 
     fun setValueHint(hint: String) {
-        til_value_KVL.hint = hint
+        binding.tilValueKVL.hint = hint
     }
 
     fun setKeyHint(hint: String) {
-        til_key_KVL.hint = hint
+        binding.tilKeyKVL.hint = hint
     }
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Licensed under the Mailchimp Mobile SDK License Agreement (the "License");
   ~ you may not use this file except in compliance with the License. Unless
   ~ required by applicable law or agreed to in writing, software distributed
@@ -10,7 +9,10 @@
   ~ limitations under the License.
   -->
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
     <solid android:color="@color/transparent" />
-    <stroke android:width="1dp" android:color="@color/black_a30"/>
+    <stroke
+        android:width="1dp"
+        android:color="@color/black_a30" />
 </shape>
