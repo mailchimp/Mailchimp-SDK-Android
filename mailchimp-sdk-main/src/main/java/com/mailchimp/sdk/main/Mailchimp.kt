@@ -69,10 +69,9 @@ open class Mailchimp protected constructor(
     }
 
     protected fun setupSdk(debugModeEnabled: Boolean) {
-        if (debugModeEnabled) {
+        if (debugModeEnabled && Timber.treeCount() == 0) {
             Timber.plant(Timber.DebugTree())
         }
-
         Timber.d("SDK initialized")
     }
 }
