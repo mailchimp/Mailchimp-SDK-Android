@@ -17,11 +17,15 @@ import com.mailchimp.sdk.api.model.ContactEvent
 import com.mailchimp.sdk.api.model.ContactEventResponse
 import com.mailchimp.sdk.api.model.UpdateContactResponse
 import okhttp3.Request
+import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MockSdkWebService(private val audienceBackend: MockMailchimpAudienceBackend, private val mockGenericCallBackend: MockGenericCallBackend) : SdkWebService {
+class MockSdkWebService(
+    private val audienceBackend: MockMailchimpAudienceBackend,
+    private val mockGenericCallBackend: MockGenericCallBackend
+) : SdkWebService {
 
     companion object {
         const val ADD_CONTACT_EVENT_TAG = "add_contact_event"
@@ -39,7 +43,7 @@ class MockSdkWebService(private val audienceBackend: MockMailchimpAudienceBacken
     }
 }
 
-class AudienceCall<T>(private val doWork: () -> T) : Call<T> {
+private class AudienceCall<T>(private val doWork: () -> T) : Call<T> {
     private var isCancelled = false
     private var isExecuted = false
 
@@ -73,6 +77,10 @@ class AudienceCall<T>(private val doWork: () -> T) : Call<T> {
 
     override fun request(): Request {
         return Request.Builder().build()
+    }
+
+    override fun timeout(): Timeout {
+        TODO("Not yet implemented")
     }
 
     private fun executeUpdate(): T {

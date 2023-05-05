@@ -16,7 +16,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.Operation
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import java.util.*
+import java.util.UUID
 
 open class WorkProcessor(private val workManager: WorkManager) {
 

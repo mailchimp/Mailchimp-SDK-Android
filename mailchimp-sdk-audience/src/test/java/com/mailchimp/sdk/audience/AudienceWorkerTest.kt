@@ -23,10 +23,14 @@ import com.mailchimp.sdk.audience.di.AudienceImplementation
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.core.di.CoreDependencies
 import com.mailchimp.sdk.core.work.SdkWorker
-import com.nhaarman.mockitokotlin2.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.mockito.kotlin.any
+import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import retrofit2.Call
 import retrofit2.Response
 
@@ -34,8 +38,8 @@ class AudienceWorkerTest {
     private val apiDependencies = mock<ApiDependencies>()
     private val coreDependencies = mock<CoreDependencies>()
     private val mailchimpConfiguration = mock<MailchimpSdkConfiguration>()
-    lateinit var gson: Gson
-    lateinit var webService: SdkWebService
+    private lateinit var gson: Gson
+    private lateinit var webService: SdkWebService
 
     @Before
     fun setup() {

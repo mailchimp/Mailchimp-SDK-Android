@@ -14,7 +14,7 @@ package com.mailchimp.sdk.core.work
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.work.WorkInfo
-import java.util.*
+import java.util.UUID
 
 interface WorkStatusProvider {
     /**
@@ -66,14 +66,17 @@ enum class WorkStatus {
      * The Queued Status is used to indicate that the job is waiting on other jobs to complete before starting.
      */
     QUEUED,
+
     /**
      * The Running Status is used to indicate that the job is currently in progress.
      */
     RUNNING,
+
     /**
      * The Finished Status is used to indicate that the job completed and encountered no errors.
      */
     FINISHED,
+
     /**
      * The Failed Status is used to indicate that the job encountered an error and may or may not have had the intended effect.
      */

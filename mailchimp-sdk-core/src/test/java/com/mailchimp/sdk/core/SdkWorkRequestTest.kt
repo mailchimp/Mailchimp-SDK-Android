@@ -12,7 +12,11 @@
 package com.mailchimp.sdk.core
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.BackoffPolicy
+import androidx.work.Data
+import androidx.work.NetworkType
+import androidx.work.WorkerParameters
+import androidx.work.workDataOf
 import com.mailchimp.sdk.core.work.SdkWorkRequest
 import com.mailchimp.sdk.core.work.SdkWorker
 import org.junit.Assert.assertEquals
@@ -58,7 +62,7 @@ class TestableSdkWorkRequest : SdkWorkRequest() {
         return MockWorker::class.java
     }
 
-    override fun workParameters(): Data? {
+    override fun workParameters(): Data {
         return workDataOf("kosmo" to "kramer")
     }
 }

@@ -12,11 +12,10 @@
 package com.mailchimp.sdk.core.di
 
 import androidx.work.WorkManager
-import com.mailchimp.sdk.api.di.ApiDependencies
 import com.mailchimp.sdk.api.di.Dependency
+import com.mailchimp.sdk.core.work.WorkManagerStatusProvider
 import com.mailchimp.sdk.core.work.WorkProcessor
 import com.mailchimp.sdk.core.work.WorkStatusProvider
-import com.mailchimp.sdk.core.work.WorkManagerStatusProvider
 
 interface CoreDependencies {
     val workProcessor: WorkProcessor

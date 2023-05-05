@@ -19,12 +19,12 @@ import timber.log.Timber
 
 /**
  * The Mailchimp Class manages all contact updates to your Mailchimp audience. This class operates
- * as a singleton. To start and instance call the [Mailchimp.initialize] method with the desired
- * configuration. To retrieve and instance of the Audience SDK call the [Mailchimp.sharedInstance]
+ * as a singleton. To start an instance call the [Mailchimp.initialize] method with the desired
+ * configuration. To retrieve an instance of the Audience SDK call the [Mailchimp.sharedInstance]
  * method.
  */
 open class Mailchimp protected constructor(
-    internal val injector: MailchimpInjector
+    private val injector: MailchimpInjector
 ) : AudienceSdkContract by injector.audienceDependencies.audienceSdkContract {
 
     companion object {
@@ -69,7 +69,7 @@ open class Mailchimp protected constructor(
     }
 
     protected fun setupSdk(debugModeEnabled: Boolean) {
-        if (debugModeEnabled && Timber.treeCount() == 0) {
+        if (debugModeEnabled && Timber.treeCount == 0) {
             Timber.plant(Timber.DebugTree())
         }
         Timber.d("SDK initialized")

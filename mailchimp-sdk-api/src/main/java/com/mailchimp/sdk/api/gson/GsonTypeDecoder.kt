@@ -17,7 +17,10 @@ interface GsonTypeDecoder {
     fun getEncodedName(classIn: Class<*>): String
 }
 
-class BasicGsonTypeDecoder private constructor(private val encodingName: String, private val encodingMap: Map<String, Class<*>>) : GsonTypeDecoder {
+class BasicGsonTypeDecoder private constructor(
+    private val encodingName: String,
+    private val encodingMap: Map<String, Class<*>>
+) : GsonTypeDecoder {
 
     private val classMap = encodingMap.entries.associateBy({ it.value }) { it.key }
 
@@ -31,7 +34,7 @@ class BasicGsonTypeDecoder private constructor(private val encodingName: String,
         } else {
             throw IllegalStateException(
                 "Gson Mapping does not exist for type $serializedType, " +
-                    "please make sure you registered a mapping for this type in your GsonTypeDecoder!"
+                        "please make sure you registered a mapping for this type in your GsonTypeDecoder!"
             )
         }
     }
@@ -42,7 +45,7 @@ class BasicGsonTypeDecoder private constructor(private val encodingName: String,
         } else {
             throw IllegalStateException(
                 "Gson mapping does not exist for class ${classIn.simpleName}, " +
-                    "please make sure you registered a mapping for this class in your GsonTypeDecoder!"
+                        "please make sure you registered a mapping for this class in your GsonTypeDecoder!"
             )
         }
     }

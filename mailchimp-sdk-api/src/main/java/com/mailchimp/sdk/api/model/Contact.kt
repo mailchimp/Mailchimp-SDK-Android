@@ -49,14 +49,17 @@ data class Contact private constructor(
     companion object {
         const val ACTIVE_TAG_STATUS = "active"
         const val INACTIVE_TAG_STATUS = "inactive"
+
         /**
          * Tag marking the user as an Android User.
          */
         const val ANDROID_TAG = "Android"
+
         /**
          * Tag marking the user as a Phone user.
          */
         const val PHONE_TAG = "Phone"
+
         /**
          * Tag marking the user as a Tablet user.
          */
@@ -189,6 +192,7 @@ enum class ContactStatus {
      */
     @SerializedName("subscribed")
     SUBSCRIBED,
+
     /**
      * Indicated that a contact is not subscribed to marketing campaigns and will only receive
      * transactional information.

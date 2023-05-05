@@ -22,9 +22,9 @@ import com.mailchimp.sdk.main.Mailchimp
 import org.junit.Before
 import org.junit.Test
 
-class AudienceSdkIntializeTests {
+class AudienceSdkInitializeTests {
 
-    var context: Context = InstrumentationRegistry.getInstrumentation().targetContext
+    private var context: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Before
     fun setup() {

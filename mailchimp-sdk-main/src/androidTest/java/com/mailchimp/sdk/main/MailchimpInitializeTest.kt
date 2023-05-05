@@ -12,15 +12,14 @@
 package com.mailchimp.sdk.main
 
 import android.app.Application
-import androidx.work.WorkManager
 import com.google.gson.Gson
 import com.mailchimp.sdk.api.di.ApiDependencies
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.core.di.CoreDependencies
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertNotNull
 import org.junit.Test
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class MailchimpInitializeTest {
 

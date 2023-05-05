@@ -13,38 +13,40 @@ package com.mailchimp.sdk.core
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import androidx.work.Data
 import androidx.work.WorkInfo
 import androidx.work.workDataOf
-import com.mailchimp.sdk.core.work.WorkProcessor
 import com.mailchimp.sdk.core.work.WorkManagerStatusProvider
+import com.mailchimp.sdk.core.work.WorkProcessor
 import com.mailchimp.sdk.core.work.WorkStatus
-import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations.initMocks
-import java.util.*
-import org.junit.rules.TestRule
 import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TestRule
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations.openMocks
+import org.mockito.kotlin.whenever
+import java.util.UUID
 
 class WorkManagerStatusProviderTest {
 
     @Mock
     private lateinit var processor: WorkProcessor
 
-    @Rule @JvmField
+    @Rule
+    @JvmField
     val rule: TestRule = InstantTaskExecutorRule()
 
     @Before
     fun setup() {
-        initMocks(this)
+        openMocks(this)
     }
 
     @Test
     fun testGetStatusById() {
         val workId = UUID.randomUUID()
-        val workInfo = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList())
+        val workInfo = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
         whenever(processor.getWorkById(workId)).thenReturn(workInfo)
 
         val statusProvider = WorkManagerStatusProvider(processor)
@@ -57,7 +59,7 @@ class WorkManagerStatusProviderTest {
     fun testGetStatusByIdLiveData() {
         val workId = UUID.randomUUID()
         val workInfoLiveData = MutableLiveData<WorkInfo>()
-        workInfoLiveData.value = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList())
+        workInfoLiveData.value = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
         whenever(processor.getWorkByIdLiveData(workId)).thenReturn(workInfoLiveData)
 
         val statusProvider = WorkManagerStatusProvider(processor)
@@ -80,7 +82,7 @@ class WorkManagerStatusProviderTest {
 
     private fun testMapping(workInfoState: WorkInfo.State, expectedStatus: WorkStatus) {
         val workId = UUID.randomUUID()
-        val workInfo = WorkInfo(workId, workInfoState, workDataOf(), emptyList())
+        val workInfo = WorkInfo(workId, workInfoState, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
         whenever(processor.getWorkById(workId)).thenReturn(workInfo)
 
         val statusProvider = WorkManagerStatusProvider(processor)

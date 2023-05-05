@@ -9,22 +9,19 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
 
 android {
-    compileSdkVersion 28
-
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -34,10 +31,20 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
 
+    namespace 'com.mailchimp.sdk.audience'
 }
 
 dependencies {
@@ -46,20 +53,20 @@ dependencies {
     implementation project(':mailchimp-sdk-core')
     implementation project(':mailchimp-sdk-api')
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.10.1'
 
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation "androidx.work:work-testing:$work_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    testImplementation 'junit:junit:4.13.2'
     testImplementation "androidx.work:work-testing:$work_version"
-}
-repositories {
-    mavenCentral()
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
+
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation "androidx.work:work-testing:$work_version"
 }

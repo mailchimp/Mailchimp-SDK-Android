@@ -12,8 +12,8 @@
 package com.mailchimp.sdkdemo
 
 import android.util.Log
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.work.Configuration
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
@@ -31,6 +31,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class WorkersTest {
 
+    private lateinit var workManager: WorkManager
+
     @Before
     fun setup() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
@@ -47,6 +49,7 @@ class WorkersTest {
                 .build()
 
         WorkManagerTestInitHelper.initializeTestWorkManager(context, configuration)
+        workManager = WorkManager.getInstance(context)
     }
 
     @Test
@@ -54,8 +57,6 @@ class WorkersTest {
         val createOrUpdateRequest =
             OneTimeWorkRequestBuilder<TestWorker>()
                 .build()
-
-        val workManager = WorkManager.getInstance()
 
         workManager.enqueue(createOrUpdateRequest).result.get()
 

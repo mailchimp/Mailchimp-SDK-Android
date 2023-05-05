@@ -27,10 +27,12 @@ abstract class SdkWorker(context: Context, workParams: WorkerParameters) : Worke
      * Max number to retry this worker.
      */
     protected open val maxRetries = 5
+
     /**
      * The result code that will be used when the retry limit is reached.
      */
     protected open val onRetryLimitReachedResponse = Response.FAILURE_CONTINUE_CHAIN
+
     /**
      * The result code that will be used when a unhandled exception is thrown by the worker.
      */
@@ -88,9 +90,10 @@ abstract class SdkWorker(context: Context, workParams: WorkerParameters) : Worke
          * Retry the given worker after whatever the original backoff criteria and retry count is. If the retry count is
          * greater than the maximum, the task will be failed as #FAILURE_CONTINUE_CHAIN.
          *
-         * See default max retry account at SdkWorker#maxRetries (which can be overriden).
+         * See default max retry account at SdkWorker#maxRetries (which can be overridden).
          */
         RETRY,
+
         /**
          * Indicates that work completion failed, and should not be retried.
          *
@@ -99,6 +102,7 @@ abstract class SdkWorker(context: Context, workParams: WorkerParameters) : Worke
          * pruned from WorkManager.
          */
         FAILURE_END_CHAIN,
+
         /**
          * Indicates that work completion failed, and should not be retried.
          *
@@ -106,6 +110,7 @@ abstract class SdkWorker(context: Context, workParams: WorkerParameters) : Worke
          * well. New workers that are submitted after this will run, regardless of this failure.
          */
         FAILURE_CONTINUE_CHAIN,
+
         /**
          * Indicates that the worker successfully completed its work.
          */

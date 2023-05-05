@@ -14,12 +14,11 @@ package com.mailchimp.sdk.main
 import android.app.Application
 import android.content.Context
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
+import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Test
-
-import org.junit.Assert.*
-import java.lang.IllegalArgumentException
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class MailchimpSdkBuilderTest {
 

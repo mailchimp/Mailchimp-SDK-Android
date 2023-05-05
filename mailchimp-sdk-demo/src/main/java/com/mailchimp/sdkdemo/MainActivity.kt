@@ -14,14 +14,15 @@ package com.mailchimp.sdkdemo
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.kale)))
-        supportActionBar!!.elevation = 0f
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ResourcesCompat.getColor(resources, R.color.kale, this.theme)))
+        supportActionBar?.elevation = 0f
     }
 
 }

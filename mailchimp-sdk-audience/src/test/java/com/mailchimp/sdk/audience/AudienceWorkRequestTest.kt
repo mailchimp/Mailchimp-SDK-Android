@@ -14,10 +14,10 @@ package com.mailchimp.sdk.audience
 import com.google.gson.Gson
 import com.mailchimp.sdk.api.model.Contact
 import com.mailchimp.sdk.audience.AudienceWorker.Companion.KEY_INPUT_CONTACT
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class AudienceWorkRequestTest {
 

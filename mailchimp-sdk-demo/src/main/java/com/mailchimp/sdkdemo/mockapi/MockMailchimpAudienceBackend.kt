@@ -26,7 +26,7 @@ class MockMailchimpAudienceBackend {
         lastCallMap[contactUpdates.emailAddress] = contactUpdates
 
         // Add to Contact Map, Merge if necessary
-        val currentContact: ApiContact? = contactMap.get(contactUpdates.emailAddress)
+        val currentContact: ApiContact? = contactMap[contactUpdates.emailAddress]
         if (currentContact != null) {
             Timber.i("Updating Contact For: ${contactUpdates.emailAddress} ")
             // Merge updates
