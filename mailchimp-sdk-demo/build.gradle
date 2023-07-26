@@ -48,28 +48,26 @@ android {
     namespace 'com.mailchimp.sdkdemo'
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'com.google.android.flexbox:flexbox:3.0.0'
-    implementation 'androidx.viewpager:viewpager:1.0.0'
-
-    //Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     implementation project(':mailchimp-sdk-audience')
     implementation project(':mailchimp-sdk-api')
     implementation project(':mailchimp-sdk-core')
     implementation project(':mailchimp-sdk-main')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.3.1'

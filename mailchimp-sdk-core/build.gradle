@@ -50,22 +50,18 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation "androidx.core:core-ktx:$kotlinx_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     api "androidx.work:work-runtime-ktx:$work_version"
     api 'com.jakewharton.timber:timber:5.0.1'
-
-    androidTestImplementation "androidx.work:work-testing:$work_version"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.3.1'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     testImplementation 'android.arch.core:core-testing:1.1.1'
 
-}
-repositories {
-    mavenCentral()
+    androidTestImplementation "androidx.work:work-testing:$work_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
