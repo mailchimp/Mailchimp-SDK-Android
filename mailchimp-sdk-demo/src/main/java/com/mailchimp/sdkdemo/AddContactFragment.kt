@@ -21,15 +21,17 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.mailchimp.sdk.api.model.Contact
 import com.mailchimp.sdk.api.model.ContactStatus
-import com.mailchimp.sdk.core.work.WorkStatus
 import com.mailchimp.sdk.main.Mailchimp
+import com.mailchimp.sdkdemo.databinding.FragmentAddContactBinding
 import com.mailchimp.sdkdemo.ui.AddressFieldLayout
 import com.mailchimp.sdkdemo.ui.KeyValueLayout
 import com.mailchimp.sdkdemo.ui.MarketingPermissionLayout
 import com.mailchimp.sdkdemo.ui.NamedFieldLayout
-import kotlinx.android.synthetic.main.fragment_add_contact.*
 
 class AddContactFragment : Fragment() {
+
+    private var _binding: FragmentAddContactBinding? = null
+    private val binding get() = _binding!!
 
     private val audienceSdk = Mailchimp.sharedInstance()
     private val addTagsCellList = mutableListOf<NamedFieldLayout>()
@@ -45,49 +47,52 @@ class AddContactFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity!!.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                activity!!.finish()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_add_contact, container, false)
+    ): View {
+        _binding = FragmentAddContactBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // This is gross but ¯\_(ツ)_/¯ since it's the demo app
-        val adapter = ArrayAdapter<Any>(context!!, R.layout.spinner_demo_app)
+        val adapter = ArrayAdapter<Any>(requireContext(), R.layout.spinner_demo_app)
         adapter.setDropDownViewResource(R.layout.spinner_drop_down)
         ContactStatus.values().toList().forEach { adapter.add(it) }
         adapter.add(noContactStatus)
-        spnr_contact_status.adapter = adapter
+        binding.spnrContactStatus.adapter = adapter
 
-        btn_create_contact.setOnClickListener { callCreateOrUpdateEndpoint() }
-        btn_add_tag.setOnClickListener { appendAddTagCell() }
-        btn_remove_tag.setOnClickListener { appendRemoveTagCell() }
-        btn_add_merge_field.setOnClickListener { appendMergeFieldCell() }
-        btn_add_address.setOnClickListener { appendAddressCell() }
-        btn_add_marketing_permission.setOnClickListener { appendMarketingPermissionCell() }
+        binding.btnCreateContact.setOnClickListener { callCreateOrUpdateEndpoint() }
+        binding.btnAddTag.setOnClickListener { appendAddTagCell() }
+        binding.btnRemoveTag.setOnClickListener { appendRemoveTagCell() }
+        binding.btnAddMergeField.setOnClickListener { appendMergeFieldCell() }
+        binding.btnAddAddress.setOnClickListener { appendAddressCell() }
+        binding.btnAddMarketingPermission.setOnClickListener { appendMarketingPermissionCell() }
     }
 
 
     private fun callCreateOrUpdateEndpoint() {
-        val email = nfl_email.value
+        val email = binding.nflEmail.value
         if (email.isBlank()) {
-            Toast.makeText(context!!, "Please enter an Email", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter an Email", Toast.LENGTH_SHORT).show()
             return
         }
         val contactBuilder = Contact.Builder(email)
 
-        val spnrOption = spnr_contact_status.selectedItem
+        val spnrOption = binding.spnrContactStatus.selectedItem
         if (spnrOption != noContactStatus) {
             contactBuilder.setContactStatus(spnrOption as ContactStatus)
         }
@@ -126,9 +131,9 @@ class AddContactFragment : Fragment() {
 
         val liveData = Mailchimp.sharedInstance().getStatusByIdLiveData(uuid)
         liveData.observe(
-            this@AddContactFragment,
+            viewLifecycleOwner,
             androidx.lifecycle.Observer {
-                Toast.makeText(context!!, "Work: $it", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Work: $it", Toast.LENGTH_SHORT).show()
             }
         )
 
@@ -136,27 +141,27 @@ class AddContactFragment : Fragment() {
     }
 
     private fun appendAddTagCell() {
-        val newLayout = NamedFieldLayout(context!!, null)
+        val newLayout = NamedFieldLayout(requireContext(), null)
         setViewMargins(newLayout)
         newLayout.label = getString(R.string.add_tag)
         newLayout.removeButtonVisible = true
         newLayout.removeButton.setOnClickListener { removeView(newLayout, addTagsCellList) }
         addTagsCellList.add(newLayout)
-        ll_add_on_fields.addView(newLayout)
+        binding.llAddOnFields.addView(newLayout)
     }
 
     private fun appendRemoveTagCell() {
-        val newLayout = NamedFieldLayout(context!!, null)
+        val newLayout = NamedFieldLayout(requireContext(), null)
         setViewMargins(newLayout)
         newLayout.label = getString(R.string.remove_tag)
         newLayout.removeButtonVisible = true
         newLayout.removeButton.setOnClickListener { removeView(newLayout, removeTagsCellList) }
         removeTagsCellList.add(newLayout)
-        ll_add_on_fields.addView(newLayout)
+        binding.llAddOnFields.addView(newLayout)
     }
 
     private fun appendMergeFieldCell() {
-        val newLayout = KeyValueLayout(context!!, null)
+        val newLayout = KeyValueLayout(requireContext(), null)
         setViewMargins(newLayout)
         newLayout.label = getString(R.string.set_merge_field)
         newLayout.removeButtonVisible = true
@@ -169,20 +174,20 @@ class AddContactFragment : Fragment() {
             )
         }
         stringMergeFieldCellList.add(newLayout)
-        ll_add_on_fields.addView(newLayout)
+        binding.llAddOnFields.addView(newLayout)
     }
 
     private fun appendAddressCell() {
-        val newLayout = AddressFieldLayout(context!!, null)
+        val newLayout = AddressFieldLayout(requireContext(), null)
         setViewMargins(newLayout)
         newLayout.removeButtonVisible = true
         newLayout.removeButton.setOnClickListener { removeView(newLayout, addressFieldCellList) }
         addressFieldCellList.add(newLayout)
-        ll_add_on_fields.addView(newLayout)
+        binding.llAddOnFields.addView(newLayout)
     }
 
     private fun appendMarketingPermissionCell() {
-        val newLayout = MarketingPermissionLayout(context!!, null)
+        val newLayout = MarketingPermissionLayout(requireContext(), null)
         setViewMargins(newLayout)
         newLayout.removeButtonVisible = true
         newLayout.removeButton.setOnClickListener {
@@ -192,12 +197,15 @@ class AddContactFragment : Fragment() {
             )
         }
         marketingPermissionCellList.add(newLayout)
-        ll_add_on_fields.addView(newLayout)
+        binding.llAddOnFields.addView(newLayout)
     }
 
     private fun setViewMargins(view: View) {
         val eightDp = resources.getDimension(R.dimen.four_dp).toInt() * 2
-        val lp = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val lp = ViewGroup.MarginLayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         lp.setMargins(0, eightDp, 0, eightDp)
         view.layoutParams = lp
     }
@@ -208,11 +216,17 @@ class AddContactFragment : Fragment() {
         removeTagsCellList.clear()
         addressFieldCellList.clear()
         marketingPermissionCellList.clear()
-        ll_add_on_fields.removeAllViews()
+        binding.llAddOnFields.removeAllViews()
     }
 
     private fun <T : View> removeView(view: T, list: MutableList<T>) {
-        ll_add_on_fields.removeView(view)
+        binding.llAddOnFields.removeView(view)
         list.remove(view)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

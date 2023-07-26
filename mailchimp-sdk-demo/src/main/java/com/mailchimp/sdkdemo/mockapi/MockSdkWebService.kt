@@ -17,6 +17,7 @@ import com.mailchimp.sdk.api.model.ContactEvent
 import com.mailchimp.sdk.api.model.ContactEventResponse
 import com.mailchimp.sdk.api.model.UpdateContactResponse
 import okhttp3.Request
+import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,6 +74,10 @@ class AudienceCall<T>(private val doWork: () -> T) : Call<T> {
 
     override fun request(): Request {
         return Request.Builder().build()
+    }
+
+    override fun timeout(): Timeout {
+        return Timeout.NONE
     }
 
     private fun executeUpdate(): T {

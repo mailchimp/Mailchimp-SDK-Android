@@ -18,20 +18,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.google.android.material.textfield.TextInputLayout
 import com.mailchimp.sdkdemo.R
-import kotlinx.android.synthetic.main.layout_named_field.view.*
+import com.mailchimp.sdkdemo.databinding.LayoutNamedFieldBinding
 
 class NamedFieldLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+
+    private val binding: LayoutNamedFieldBinding
+
     var label: String? = null
         set(value) {
-            til_NFL.hint = value
+            binding.tilNFL.hint = value
             field = value
         }
-
     init {
         val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.layout_named_field, this, true)
+        binding = LayoutNamedFieldBinding.inflate(inflater, this)
+
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         var typedArray: TypedArray? = null
@@ -43,18 +45,20 @@ class NamedFieldLayout(context: Context, attrs: AttributeSet?) : LinearLayout(co
         }
     }
 
-    val removeButton = btn_remove_field
+
+
+    val removeButton = binding.btnRemoveField
     val value: String
         get() {
-            return tiet_NFL.text.toString().trim()
+            return binding.tietNFL.text.toString().trim()
         }
     var removeButtonVisible = false
         set(value) {
             field = value
             if (value) {
-                btn_remove_field.visibility = View.VISIBLE
+                binding.btnRemoveField.visibility = View.VISIBLE
             } else {
-                btn_remove_field.visibility = View.GONE
+                binding.btnRemoveField.visibility = View.GONE
             }
         }
 }

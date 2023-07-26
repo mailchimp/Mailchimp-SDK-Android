@@ -12,7 +12,6 @@
 package com.mailchimp.sdkdemo.ui
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -21,55 +20,58 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.mailchimp.sdk.api.model.mergefields.Address
 import com.mailchimp.sdk.api.model.mergefields.Country
 import com.mailchimp.sdkdemo.R
-import kotlinx.android.synthetic.main.layout_address_field.view.*
+import com.mailchimp.sdkdemo.databinding.LayoutAddressFieldBinding
 
 class AddressFieldLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
+
+    private val binding: LayoutAddressFieldBinding
+
     init {
         val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.layout_address_field, this, true)
+        binding = LayoutAddressFieldBinding.inflate(inflater, this)
 
         val adapter = ArrayAdapter<Country>(context, R.layout.country_spinner_item)
         adapter.setDropDownViewResource(R.layout.spinner_drop_down)
         adapter.addAll(Country.values().toList())
-        spnr_country.adapter = adapter
+        binding.spnrCountry.adapter = adapter
     }
 
-    val removeButton = btn_remove_field
+    val removeButton = binding.btnRemoveField
 
     val key: String
         get() {
-            return tiet_key_AFL.text.toString().trim()
+            return binding.tietKeyAFL.text.toString().trim()
         }
 
     val lineOne: String
         get() {
-            return tiet_line_one_AFL.text.toString().trim()
+            return binding.tietLineOneAFL.text.toString().trim()
         }
 
     val lineTwo: String
         get() {
-            return tiet_line_two_AFL.text.toString().trim()
+            return binding.tietLineTwoAFL.text.toString().trim()
         }
 
     val city: String
         get() {
-            return tiet_city_AFL.text.toString().trim()
+            return binding.tietCityAFL.text.toString().trim()
         }
 
     val state: String
         get() {
-            return tiet_state_AFL.text.toString().trim()
+            return binding.tietStateAFL.text.toString().trim()
         }
 
     val country: Country
         get() {
-            return spnr_country.selectedItem as Country
+            return binding.spnrCountry.selectedItem as Country
         }
 
     val zip: String
         get() {
-            return tiet_zip_AFL.text.toString().trim()
+            return binding.tietZipAFL.text.toString().trim()
         }
 
     val address: Address?
@@ -90,9 +92,9 @@ class AddressFieldLayout(context: Context, attrs: AttributeSet?) : ConstraintLay
         set(value) {
             field = value
             if (value) {
-                btn_remove_field.visibility = View.VISIBLE
+                binding.btnRemoveField.visibility = View.VISIBLE
             } else {
-                btn_remove_field.visibility = View.GONE
+                binding.btnRemoveField.visibility = View.GONE
             }
         }
 

@@ -11,20 +11,19 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-
-
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 33
+        compileSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     buildTypes {
@@ -37,6 +36,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    namespace 'com.mailchimp.sdk.api'
 
 }
 
@@ -45,10 +45,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.3.1'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 }
 

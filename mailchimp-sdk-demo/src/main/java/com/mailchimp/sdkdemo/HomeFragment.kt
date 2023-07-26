@@ -18,30 +18,39 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.mailchimp.sdkdemo.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private lateinit var pagerAdapter: HomeFragmentPagerAdapter
 
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        pagerAdapter = HomeFragmentPagerAdapter(fragmentManager!!)
-        view_pager_FH.adapter = pagerAdapter
-        tab_layout_FH.setupWithViewPager(view_pager_FH)
+        pagerAdapter = HomeFragmentPagerAdapter(parentFragmentManager)
+        binding.viewPagerFH.adapter = pagerAdapter
+        binding.tabLayoutFH.setupWithViewPager(binding.viewPagerFH)
 
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
+
 
 class HomeFragmentPagerAdapter(fragmentManager: FragmentManager) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

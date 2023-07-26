@@ -25,37 +25,41 @@ import com.mailchimp.sdk.audience.di.AudienceImplementation
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.main.Mailchimp
 import com.mailchimp.sdk.main.di.MailchimpInjector
+import com.mailchimp.sdkdemo.databinding.FragmentSetupBinding
 import com.mailchimp.sdkdemo.mockapi.MockApiImplementation
 import com.mailchimp.sdkdemo.mockapi.MockMailchimp
-import kotlinx.android.synthetic.main.fragment_setup.*
 import java.util.*
 
 class SetupFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_setup, container, false)
+    private var _binding: FragmentSetupBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentSetupBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cbx_autotag.isChecked = true
-        cbx_debug.isChecked = true
-        et_sdk_key.text = Editable.Factory().newEditable(BuildConfig.MAILCHIMP_SDK_DEMO_KEY)
-        btn_start.setOnClickListener { start() }
-        btn_start_mock.setOnClickListener { startMock() }
+        binding.cbxAutotag.isChecked = true
+        binding.cbxDebug.isChecked = true
+        binding.etSdkKey.text = Editable.Factory().newEditable(BuildConfig.MAILCHIMP_SDK_DEMO_KEY)
+        binding.btnStart.setOnClickListener { start() }
+        binding.btnStartMock.setOnClickListener { startMock() }
     }
 
     private fun start() {
-        val sdkKey = et_sdk_key.text.toString().toLowerCase(Locale.getDefault())
+        val sdkKey = binding.etSdkKey.text.toString().lowercase()
         if (sdkKey.isBlank()) {
-            Toast.makeText(context!!, getString(R.string.invalid_sdk_key_msg), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.invalid_sdk_key_msg), Toast.LENGTH_SHORT).show()
         } else {
             // Initialize SDK
             // Normally this would be done elsewhere. Typically App Start.
             val configuration =
-                MailchimpSdkConfiguration.Builder(context!!, sdkKey)
-                    .isDebugModeEnabled(cbx_debug.isChecked)
-                    .isAutoTaggingEnabled(cbx_autotag.isChecked)
+                MailchimpSdkConfiguration.Builder(requireContext(), sdkKey)
+                    .isDebugModeEnabled(binding.cbxDebug.isChecked)
+                    .isAutoTaggingEnabled(binding.cbxAutotag.isChecked)
                     .build()
             Mailchimp.initialize(configuration)
 
@@ -65,9 +69,9 @@ class SetupFragment : Fragment() {
 
     private fun startMock() {
         val configuration =
-            MailchimpSdkConfiguration.Builder(context!!, "sdkkey-us1")
-                .isDebugModeEnabled(cbx_debug.isChecked)
-                .isAutoTaggingEnabled(cbx_autotag.isChecked)
+            MailchimpSdkConfiguration.Builder(requireContext(), "sdkkey-us1")
+                .isDebugModeEnabled(binding.cbxDebug.isChecked)
+                .isAutoTaggingEnabled(binding.cbxAutotag.isChecked)
                 .build()
         val apiDependencies = MockApiImplementation()
         val mockInjector = object : MailchimpInjector(configuration) {

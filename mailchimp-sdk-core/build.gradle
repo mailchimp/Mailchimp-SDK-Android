@@ -11,21 +11,20 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-
-
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 33
+        compileSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         consumerProguardFiles 'proguard-rules.pro'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     buildTypes {
@@ -38,6 +37,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    namespace 'com.mailchimp.mailchimp_sdk_core'
 }
 
 dependencies {
@@ -45,20 +45,20 @@ dependencies {
 
     implementation project(path: ':mailchimp-sdk-api')
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation "androidx.core:core-ktx:$kotlinx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api "androidx.work:work-runtime-ktx:$work_version"
-    api 'com.jakewharton.timber:timber:4.7.1'
+    api 'com.jakewharton.timber:timber:5.0.1'
 
     androidTestImplementation "androidx.work:work-testing:$work_version"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.3.1'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     testImplementation 'android.arch.core:core-testing:1.1.1'
 
