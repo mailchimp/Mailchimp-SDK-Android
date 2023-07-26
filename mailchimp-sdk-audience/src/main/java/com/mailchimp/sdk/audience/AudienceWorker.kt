@@ -25,6 +25,7 @@ class AudienceWorker(appContext: Context, workParams: WorkerParameters) : SdkWor
 
     companion object {
         const val KEY_INPUT_CONTACT = "contact"
+
         /*
          * We will not retry the request if we receive the following error codes.
          *  400: Malformed request.
@@ -44,7 +45,11 @@ class AudienceWorker(appContext: Context, workParams: WorkerParameters) : SdkWor
             Timber.d("Creating or updating user failed for %s, will not retry", contact.emailAddress)
             Response.FAILURE_CONTINUE_CHAIN
         } else {
-            Timber.d("Creating or updating user failed for %s, will retry if not attempt %s", contact.emailAddress, maxRetries)
+            Timber.d(
+                "Creating or updating user failed for %s, will retry if not attempt %s",
+                contact.emailAddress,
+                maxRetries
+            )
             Response.RETRY
         }
     }

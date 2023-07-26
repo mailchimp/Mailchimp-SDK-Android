@@ -19,7 +19,7 @@ import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.core.work.WorkProcessor
 import com.mailchimp.sdk.core.work.WorkStatusProvider
 import timber.log.Timber
-import java.util.*
+import java.util.UUID
 
 class WorkManagerAudienceSdk(
     private val workProcessor: WorkProcessor,
@@ -122,7 +122,7 @@ class WorkManagerAudienceSdk(
         val builder = Contact.Builder(contact)
         builder.addTag(Contact.ANDROID_TAG)
 
-        if (sdkConfiguration.context.resources.getBoolean(R.bool.isTablet)) {
+        if (sdkConfiguration.context.resources.getBoolean(com.mailchimp.mailchimp_sdk_core.R.bool.isTablet)) {
             builder.addTag(Contact.TABLET_TAG)
         } else {
             builder.addTag(Contact.PHONE_TAG)

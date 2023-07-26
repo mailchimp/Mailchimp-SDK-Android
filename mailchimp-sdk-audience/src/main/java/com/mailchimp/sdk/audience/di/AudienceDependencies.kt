@@ -42,7 +42,12 @@ class AudienceImplementation private constructor(
         private var instance: AudienceImplementation? = null
 
         /* Don't use this unless you're sure you should be */
-        fun initialize(coreDependencies: CoreDependencies, apiDependencies: ApiDependencies, mailchimpSdkConfiguration: MailchimpSdkConfiguration, override: Boolean = false): AudienceImplementation {
+        fun initialize(
+            coreDependencies: CoreDependencies,
+            apiDependencies: ApiDependencies,
+            mailchimpSdkConfiguration: MailchimpSdkConfiguration,
+            override: Boolean = false
+        ): AudienceImplementation {
             synchronized(this) {
                 if (instance == null || override) {
                     instance = AudienceImplementation(coreDependencies, apiDependencies, mailchimpSdkConfiguration)

@@ -96,8 +96,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/state"
         app:layout_constraintBottom_toBottomOf="@id/til_city_AFL"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/til_city_AFL"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/til_city_AFL">
 
         <com.google.android.material.textfield.TextInputEditText

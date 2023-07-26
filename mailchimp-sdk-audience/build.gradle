@@ -9,8 +9,10 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
 
 android {
     defaultConfig {
@@ -19,7 +21,6 @@ android {
         compileSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

@@ -21,13 +21,21 @@ import com.mailchimp.sdk.api.model.mergefields.Address
 import com.mailchimp.sdk.audience.AudienceWorker.Companion.KEY_INPUT_CONTACT
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.core.work.WorkProcessor
-import com.nhaarman.mockitokotlin2.*
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations.initMocks
-import java.util.*
+import org.mockito.MockitoAnnotations.openMocks
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import java.util.UUID
 
 /**
  * Tests that the audience sdk work manager implementation generates the right work requests and submits it to
@@ -40,16 +48,19 @@ class WorkManagerAudienceSdkTest {
 
     @Mock
     private lateinit var processor: WorkProcessor
+
     @Mock
     private lateinit var gson: Gson
+
     @Mock
     private lateinit var audienceContract: AudienceSdkContract
+
     @Mock
     private lateinit var audienceSdkConfiguration: MailchimpSdkConfiguration
 
     @Before
     fun setup() {
-        initMocks(this)
+        openMocks(this)
     }
 
     @Test
@@ -261,7 +272,7 @@ class WorkManagerAudienceSdkTest {
 
         whenever(processor.submitWork(any())).thenReturn(generatedUUID to mock())
         whenever(mockApp.resources).thenReturn(resource)
-        whenever(resource.getBoolean(R.bool.isTablet)).thenReturn(true)
+        whenever(resource.getBoolean(com.mailchimp.mailchimp_sdk_core.R.bool.isTablet)).thenReturn(true)
 
         sdk.createOrUpdateContact(contact)
 
@@ -301,7 +312,7 @@ class WorkManagerAudienceSdkTest {
 
         whenever(processor.submitWork(any())).thenReturn(generatedUUID to mock())
         whenever(mockApp.resources).thenReturn(resource)
-        whenever(resource.getBoolean(R.bool.isTablet)).thenReturn(false)
+        whenever(resource.getBoolean(com.mailchimp.mailchimp_sdk_core.R.bool.isTablet)).thenReturn(false)
 
         sdk.createOrUpdateContact(contact)
 

@@ -13,22 +13,29 @@ package com.mailchimp.sdk.core
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.work.*
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.Operation
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import androidx.work.WorkerParameters
+import androidx.work.workDataOf
 import com.google.common.util.concurrent.ListenableFuture
 import com.mailchimp.sdk.core.work.SdkWorkRequest
 import com.mailchimp.sdk.core.work.SdkWorker
 import com.mailchimp.sdk.core.work.WorkProcessor
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.eq
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations.initMocks
-import java.util.*
+import org.mockito.MockitoAnnotations.openMocks
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
+import java.util.UUID
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
@@ -39,13 +46,13 @@ class WorkProcessorTest {
 
     @Before
     fun setup() {
-        initMocks(this)
+        openMocks(this)
     }
 
     @Test
     fun testSubmitWorkWithPrecedingRunningTask() {
         val workId = UUID.randomUUID()
-        val workInfo = WorkInfo(workId, WorkInfo.State.RUNNING, workDataOf(), emptyList())
+        val workInfo = WorkInfo(workId, WorkInfo.State.RUNNING, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
         val future = TestableListenableFuture(listOf(workInfo))
 
         whenever(workManager.getWorkInfosForUniqueWork(anyString())).thenReturn(future)
@@ -57,7 +64,13 @@ class WorkProcessorTest {
         val operation = mock<Operation>()
 
         // verifies the preceding work name of this request is used (not the unique work name)
-        whenever(workManager.enqueueUniqueWork(eq(expectedQueueName), eq(ExistingWorkPolicy.APPEND), any<OneTimeWorkRequest>()))
+        whenever(
+            workManager.enqueueUniqueWork(
+                eq(expectedQueueName),
+                eq(ExistingWorkPolicy.APPEND),
+                any<OneTimeWorkRequest>()
+            )
+        )
             .thenReturn(operation)
 
         val result = workProcessor.submitWork(workRequest)
@@ -67,7 +80,7 @@ class WorkProcessorTest {
     @Test
     fun testSubmitWorkWithPrecedingFinishedTask() {
         val workId = UUID.randomUUID()
-        val workInfo = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList())
+        val workInfo = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
         val future = TestableListenableFuture(listOf(workInfo))
 
         whenever(workManager.getWorkInfosForUniqueWork(anyString())).thenReturn(future)
@@ -79,7 +92,13 @@ class WorkProcessorTest {
         val operation = mock<Operation>()
 
         // verifies the unique work name of this request is used (not the preceding work name)
-        whenever(workManager.enqueueUniqueWork(eq(expectedQueueName), eq(ExistingWorkPolicy.APPEND), any<OneTimeWorkRequest>()))
+        whenever(
+            workManager.enqueueUniqueWork(
+                eq(expectedQueueName),
+                eq(ExistingWorkPolicy.APPEND),
+                any<OneTimeWorkRequest>()
+            )
+        )
             .thenReturn(operation)
 
         val result = workProcessor.submitWork(workRequest)
@@ -99,7 +118,13 @@ class WorkProcessorTest {
         val operation = mock<Operation>()
 
         // verifies the unique work name of this request is used (not the preceding work name)
-        whenever(workManager.enqueueUniqueWork(eq(expectedQueueName), eq(ExistingWorkPolicy.APPEND), any<OneTimeWorkRequest>()))
+        whenever(
+            workManager.enqueueUniqueWork(
+                eq(expectedQueueName),
+                eq(ExistingWorkPolicy.APPEND),
+                any<OneTimeWorkRequest>()
+            )
+        )
             .thenReturn(operation)
 
         val result = workProcessor.submitWork(workRequest)
@@ -158,9 +183,10 @@ class WorkProcessorTest {
         assertEquals(mockData, result)
     }
 
-    class TestableListenableFuture<T>(val testData: T) : ListenableFuture<T> {
+    class TestableListenableFuture<T>(private val testData: T) : ListenableFuture<T> {
         override fun addListener(listener: Runnable, executor: Executor) {
         }
+
         override fun isDone(): Boolean {
             return true
         }

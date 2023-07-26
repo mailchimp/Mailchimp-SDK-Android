@@ -30,30 +30,33 @@ import com.mailchimp.sdkdemo.ui.NamedFieldLayout
 
 class AddContactFragment : Fragment() {
 
-    private var _binding: FragmentAddContactBinding? = null
-    private val binding get() = _binding!!
-
     private val audienceSdk = Mailchimp.sharedInstance()
     private val addTagsCellList = mutableListOf<NamedFieldLayout>()
     private val removeTagsCellList = mutableListOf<NamedFieldLayout>()
     private val stringMergeFieldCellList = mutableListOf<KeyValueLayout>()
     private val addressFieldCellList = mutableListOf<AddressFieldLayout>()
     private val marketingPermissionCellList = mutableListOf<MarketingPermissionLayout>()
+
     private val noContactStatus = object {
         override fun toString(): String {
             return "DON'T SEND CONTACT STATUS"
         } // Placeholder object that is a stand in for a null value
     }
 
+    private var _binding: FragmentAddContactBinding? = null
+
+    /**
+     * This property is only valid between onCreateView and onDestroyView.
+     */
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    requireActivity().finish()
-                }
-            })
+        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                activity?.finish()
+            }
+        })
     }
 
     override fun onCreateView(
@@ -61,8 +64,10 @@ class AddContactFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddContactBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentAddContactBinding.inflate(inflater, container, false).let {
+            _binding = it
+            it.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,6 +88,10 @@ class AddContactFragment : Fragment() {
         binding.btnAddMarketingPermission.setOnClickListener { appendMarketingPermissionCell() }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     private fun callCreateOrUpdateEndpoint() {
         val email = binding.nflEmail.value
@@ -130,12 +139,9 @@ class AddContactFragment : Fragment() {
         val uuid = audienceSdk.createOrUpdateContact(contact)
 
         val liveData = Mailchimp.sharedInstance().getStatusByIdLiveData(uuid)
-        liveData.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer {
-                Toast.makeText(requireContext(), "Work: $it", Toast.LENGTH_SHORT).show()
-            }
-        )
+        liveData.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "Work: $it", Toast.LENGTH_SHORT).show()
+        }
 
         clearAddedCells()
     }
@@ -202,10 +208,7 @@ class AddContactFragment : Fragment() {
 
     private fun setViewMargins(view: View) {
         val eightDp = resources.getDimension(R.dimen.four_dp).toInt() * 2
-        val lp = ViewGroup.MarginLayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        val lp = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         lp.setMargins(0, eightDp, 0, eightDp)
         view.layoutParams = lp
     }
@@ -223,10 +226,4 @@ class AddContactFragment : Fragment() {
         binding.llAddOnFields.removeView(view)
         list.remove(view)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }

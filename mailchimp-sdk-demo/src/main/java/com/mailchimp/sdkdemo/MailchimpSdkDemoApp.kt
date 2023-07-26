@@ -13,9 +13,4 @@ package com.mailchimp.sdkdemo
 
 import android.app.Application
 
-class MailchimpSdkDemoApp : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+class MailchimpSdkDemoApp : Application()

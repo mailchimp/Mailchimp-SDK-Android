@@ -26,20 +26,26 @@ import com.mailchimp.sdk.api.model.ContactStatus
 import com.mailchimp.sdk.api.model.mergefields.Address
 import com.mailchimp.sdk.api.model.mergefields.Country
 import com.mailchimp.sdk.api.model.mergefields.StringMergeFieldValue
-import com.mailchimp.sdk.audience.R
 import com.mailchimp.sdk.audience.di.AudienceDependencies
 import com.mailchimp.sdk.audience.di.AudienceImplementation
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.core.work.WorkStatus
 import com.mailchimp.sdk.main.Mailchimp
 import com.mailchimp.sdk.main.di.MailchimpInjector
-import com.mailchimp.sdkdemo.mockapi.*
+import com.mailchimp.sdkdemo.mockapi.MockApiImplementation
+import com.mailchimp.sdkdemo.mockapi.MockGenericCallBackend
+import com.mailchimp.sdkdemo.mockapi.MockMailchimp
+import com.mailchimp.sdkdemo.mockapi.MockMailchimpAudienceBackend
+import com.mailchimp.sdkdemo.mockapi.MockSdkWebService
 import org.hamcrest.CoreMatchers.`is`
-import org.junit.Assert.*
+import org.hamcrest.MatcherAssert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.lang.Exception
-import java.util.*
+import java.util.UUID
 
 class PublicAudienceSdkIntegrationTest {
 
@@ -63,7 +69,7 @@ class PublicAudienceSdkIntegrationTest {
                 .setExecutor(SynchronousExecutor())
                 .build()
         WorkManagerTestInitHelper.initializeTestWorkManager(context, config)
-        workManager = WorkManager.getInstance()
+        workManager = WorkManager.getInstance(context)
         workManager.pruneWork()
     }
 
@@ -242,9 +248,9 @@ class PublicAudienceSdkIntegrationTest {
         assertNotNull(contact)
         assertEquals(email, contact!!.emailAddress)
 
-        val actualAddress = getAddressFromContact(contact, mergeFieldName)
+        val actualAddress = getAddressFromContact(contact, mergeFieldName)!!
         assertNotNull(actualAddress)
-        assertEquals(addressLine1, actualAddress!!.addressLineOne)
+        assertEquals(addressLine1, actualAddress.addressLineOne)
         assertEquals(addressLine2, actualAddress.addressLineTwo)
         assertEquals(city, actualAddress.city)
         assertEquals(state, actualAddress.state)
@@ -379,9 +385,9 @@ class PublicAudienceSdkIntegrationTest {
         assertContactMergeField(actualContact, mergeFieldTag1, mergeFieldValue1)
         assertContactMergeField(actualContact, mergeFieldTag2, mergeFieldValue2)
 
-        val actualAddress = getAddressFromContact(actualContact, addressMergeTag)
+        val actualAddress = getAddressFromContact(actualContact, addressMergeTag)!!
         assertNotNull(actualAddress)
-        assertEquals(addressLine1, actualAddress!!.addressLineOne)
+        assertEquals(addressLine1, actualAddress.addressLineOne)
         assertEquals(addressLine2, actualAddress.addressLineTwo)
         assertEquals(city, actualAddress.city)
         assertEquals(state, actualAddress.state)
@@ -397,7 +403,8 @@ class PublicAudienceSdkIntegrationTest {
         val id = mailchimp.addContactEvent(email, event)
         ensureComplete(id!!)
 
-        val actualEventRequest = mockGenericCallBackend.getRequests(MockSdkWebService.ADD_CONTACT_EVENT_TAG).last() as ContactEvent
+        val actualEventRequest =
+            mockGenericCallBackend.getRequests(MockSdkWebService.ADD_CONTACT_EVENT_TAG).last() as ContactEvent
         assertEquals(event, actualEventRequest.eventName)
         assertEquals(email, actualEventRequest.emailAddress)
         assertNull(actualEventRequest.properties)
@@ -412,7 +419,8 @@ class PublicAudienceSdkIntegrationTest {
         val id = mailchimp.addContactEvent(email, event, properties)
         ensureComplete(id!!)
 
-        val actualEventRequest = mockGenericCallBackend.getRequests(MockSdkWebService.ADD_CONTACT_EVENT_TAG).last() as ContactEvent
+        val actualEventRequest =
+            mockGenericCallBackend.getRequests(MockSdkWebService.ADD_CONTACT_EVENT_TAG).last() as ContactEvent
 
         assertEquals(event, actualEventRequest.eventName)
         assertEquals(email, actualEventRequest.emailAddress)
@@ -421,18 +429,18 @@ class PublicAudienceSdkIntegrationTest {
 
     private fun ensureComplete(id: UUID) {
         try {
-            WorkManagerTestInitHelper.getTestDriver().setAllConstraintsMet(id)
+            WorkManagerTestInitHelper.getTestDriver(context)?.setAllConstraintsMet(id)
         } catch (e: Exception) {
             // ignored
         }
     }
 
     private fun isTablet(): Boolean {
-        return context.resources.getBoolean(R.bool.isTablet)
+        return context.resources.getBoolean(com.mailchimp.mailchimp_sdk_core.R.bool.isTablet)
     }
 
     private fun getAddressFromContact(contact: ApiContact, mergeFieldName: String): Address? {
-        return contact.mergeFields?.get(mergeFieldName) as Address
+        return contact.mergeFields?.get(mergeFieldName) as? Address
     }
 
     private fun assertContactContainsTag(contact: ApiContact, tag: String, active: Boolean) {
@@ -451,7 +459,7 @@ class PublicAudienceSdkIntegrationTest {
 
     private fun assertWorkInFinishedState(id: UUID) {
         val status = mailchimp.getStatusById(id)
-        assertThat(WorkStatus.FINISHED, `is`(status))
+        MatcherAssert.assertThat(WorkStatus.FINISHED, `is`(status))
     }
 
     private fun assertContactContainsPermission(contact: ApiContact, id: String, enabled: Boolean) {
@@ -468,7 +476,11 @@ class PublicAudienceSdkIntegrationTest {
         if (contact.mergeFields?.isNotEmpty() == true) {
             for (mergeField in contact.mergeFields!!) {
                 if (mergeField.value is StringMergeFieldValue) {
-                    assertContactMergeField(apiContact, mergeField.key, (mergeField.value as StringMergeFieldValue).value)
+                    assertContactMergeField(
+                        apiContact,
+                        mergeField.key,
+                        (mergeField.value as StringMergeFieldValue).value
+                    )
                 } else if (mergeField.value is Address) {
                     assertEquals(mergeField.value, apiContact.mergeFields!![mergeField.key] as Address)
                 }

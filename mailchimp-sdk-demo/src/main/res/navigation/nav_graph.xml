@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Licensed under the Mailchimp Mobile SDK License Agreement (the "License");
   ~ you may not use this file except in compliance with the License. Unless
   ~ required by applicable law or agreed to in writing, software distributed
@@ -11,13 +10,14 @@
   -->
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/setupFragment">
 
     <fragment
         android:id="@+id/setupFragment"
         android:name="com.mailchimp.sdkdemo.SetupFragment"
-        android:label="SetupFragment" >
+        android:label="SetupFragment">
         <action
             android:id="@+id/action_setupFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

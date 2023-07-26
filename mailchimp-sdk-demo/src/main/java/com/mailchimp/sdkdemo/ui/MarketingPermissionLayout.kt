@@ -20,28 +20,27 @@ import com.mailchimp.sdkdemo.databinding.LayoutMarketingPermissionFieldBinding
 
 class MarketingPermissionLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
-    private val binding: LayoutMarketingPermissionFieldBinding
-    init {
-        val inflater = LayoutInflater.from(context)
-        binding = LayoutMarketingPermissionFieldBinding.inflate(inflater, this)
-    }
+    private val binding = LayoutMarketingPermissionFieldBinding.inflate(LayoutInflater.from(context), this)
 
     val removeButton = binding.btnRemoveField
+
     val isPermissionGranted: Boolean
         get() {
             return binding.scValue.isChecked
         }
+
     val permission: String
         get() {
             return binding.tietKeyMPFL.text.toString().trim()
         }
+
     var removeButtonVisible = false
         set(value) {
             field = value
-            if (value) {
-                binding.btnRemoveField.visibility = View.VISIBLE
+            binding.btnRemoveField.visibility = if (value) {
+                View.VISIBLE
             } else {
-                binding.btnRemoveField.visibility = View.GONE
+                View.GONE
             }
         }
 }

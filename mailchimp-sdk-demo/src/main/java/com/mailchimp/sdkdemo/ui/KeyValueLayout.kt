@@ -20,16 +20,11 @@ import com.mailchimp.sdkdemo.databinding.LayoutKeyValueBinding
 
 class KeyValueLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
-
-    private val binding: LayoutKeyValueBinding
-    init {
-        val inflater = LayoutInflater.from(context)
-        binding = LayoutKeyValueBinding.inflate(inflater, this)
-    }
+    private val binding = LayoutKeyValueBinding.inflate(LayoutInflater.from(context), this)
 
     var label: String? = null
         set(value) {
-            if (value != null && value.isNotEmpty()) {
+            if (!value.isNullOrEmpty()) {
                 binding.tvLabelKVL.text = value
                 binding.tvLabelKVL.visibility = View.VISIBLE
             } else {
@@ -39,14 +34,17 @@ class KeyValueLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(
         }
 
     val removeButton = binding.btnRemoveField
+
     val value: String
         get() {
             return binding.tietValueKVL.text.toString().trim()
         }
+
     val key: String
         get() {
-            return binding.tietValueKVL.text.toString().trim()
+            return binding.tietKeyKVL.text.toString().trim()
         }
+
     var removeButtonVisible = false
         set(value) {
             field = value

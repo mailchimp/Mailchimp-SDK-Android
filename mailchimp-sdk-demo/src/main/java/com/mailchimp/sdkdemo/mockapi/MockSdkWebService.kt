@@ -22,7 +22,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MockSdkWebService(private val audienceBackend: MockMailchimpAudienceBackend, private val mockGenericCallBackend: MockGenericCallBackend) : SdkWebService {
+class MockSdkWebService(
+    private val audienceBackend: MockMailchimpAudienceBackend,
+    private val mockGenericCallBackend: MockGenericCallBackend
+) : SdkWebService {
 
     companion object {
         const val ADD_CONTACT_EVENT_TAG = "add_contact_event"
@@ -40,7 +43,7 @@ class MockSdkWebService(private val audienceBackend: MockMailchimpAudienceBacken
     }
 }
 
-class AudienceCall<T>(private val doWork: () -> T) : Call<T> {
+private class AudienceCall<T>(private val doWork: () -> T) : Call<T> {
     private var isCancelled = false
     private var isExecuted = false
 
@@ -77,7 +80,7 @@ class AudienceCall<T>(private val doWork: () -> T) : Call<T> {
     }
 
     override fun timeout(): Timeout {
-        return Timeout.NONE
+        TODO("Not yet implemented")
     }
 
     private fun executeUpdate(): T {

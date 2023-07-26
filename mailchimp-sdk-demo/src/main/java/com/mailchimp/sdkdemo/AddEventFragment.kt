@@ -24,25 +24,36 @@ import timber.log.Timber
 
 class AddEventFragment : Fragment() {
 
-    private var _binding: FragmentAddEventBinding? = null
-    private val binding get() = _binding!!
-
     private val mailchimpSdk = Mailchimp.sharedInstance()
     private val propertiesCellList = mutableListOf<KeyValueLayout>()
+
+    private var _binding: FragmentAddEventBinding? = null
+
+    /**
+     * This property is only valid between onCreateView and onDestroyView.
+     */
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddEventBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentAddEventBinding.inflate(inflater, container, false).let {
+            _binding = it
+            it.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnAddPair.setOnClickListener { appendPropertyCell() }
         binding.btnCreateEvent.setOnClickListener { addEvent() }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun addEvent() {
@@ -53,8 +64,7 @@ class AddEventFragment : Fragment() {
         }
         val eventName = binding.nflEventNameFAE.value
         if (eventName.isBlank()) {
-            Toast.makeText(requireContext(), "Please enter an Event Name", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(requireContext(), "Please enter an Event Name", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -66,14 +76,10 @@ class AddEventFragment : Fragment() {
             if (propertyName.isBlank() && propertyValue.isBlank()) {
                 Timber.i("Ignoring empty property")
             } else if (propertyName.isBlank() || propertyValue.isBlank()) {
-                Toast.makeText(
-                    requireContext(),
-                    "Property names and values cannot be empty",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "Property names and values cannot be empty", Toast.LENGTH_SHORT).show()
                 return
             } else {
-                properties.put(view.key, view.value)
+                properties[view.key] = view.value
             }
         }
 
@@ -94,9 +100,7 @@ class AddEventFragment : Fragment() {
         }
 
         val liveData = mailchimpSdk.getStatusByIdLiveData(eventId)
-        liveData.observe(
-            viewLifecycleOwner
-        ) {
+        liveData.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), "Work: $it", Toast.LENGTH_SHORT).show()
         }
 

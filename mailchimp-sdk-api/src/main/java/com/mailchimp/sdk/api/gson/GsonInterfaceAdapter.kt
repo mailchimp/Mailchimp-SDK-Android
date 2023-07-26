@@ -45,7 +45,7 @@ class GsonInterfaceAdapter<T : Any>(private val typeDecoder: GsonTypeDecoder) : 
         if (!wrapper.has(typeEncoding)) {
             throw IllegalStateException(
                 "Json object $wrapper does not contain expected $typeEncoding property. Without " +
-                    "the $typeEncoding property, it is unknown how to deserialize this object."
+                        "the $typeEncoding property, it is unknown how to deserialize this object."
             )
         }
 

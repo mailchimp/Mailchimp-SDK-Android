@@ -28,16 +28,22 @@ import com.mailchimp.sdk.main.di.MailchimpInjector
 import com.mailchimp.sdkdemo.databinding.FragmentSetupBinding
 import com.mailchimp.sdkdemo.mockapi.MockApiImplementation
 import com.mailchimp.sdkdemo.mockapi.MockMailchimp
-import java.util.*
+import java.util.Locale
 
 class SetupFragment : Fragment() {
 
     private var _binding: FragmentSetupBinding? = null
+
+    /**
+     * This property is only valid between onCreateView and onDestroyView.
+     */
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentSetupBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentSetupBinding.inflate(inflater, container, false).let {
+            _binding = it
+            it.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,7 +56,7 @@ class SetupFragment : Fragment() {
     }
 
     private fun start() {
-        val sdkKey = binding.etSdkKey.text.toString().lowercase()
+        val sdkKey = binding.etSdkKey.text.toString().lowercase(Locale.getDefault())
         if (sdkKey.isBlank()) {
             Toast.makeText(requireContext(), getString(R.string.invalid_sdk_key_msg), Toast.LENGTH_SHORT).show()
         } else {

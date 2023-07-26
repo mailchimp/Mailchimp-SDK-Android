@@ -24,13 +24,9 @@ import com.mailchimp.sdkdemo.databinding.LayoutAddressFieldBinding
 
 class AddressFieldLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
-
-    private val binding: LayoutAddressFieldBinding
+    private val binding = LayoutAddressFieldBinding.inflate(LayoutInflater.from(context), this)
 
     init {
-        val inflater = LayoutInflater.from(context)
-        binding = LayoutAddressFieldBinding.inflate(inflater, this)
-
         val adapter = ArrayAdapter<Country>(context, R.layout.country_spinner_item)
         adapter.setDropDownViewResource(R.layout.spinner_drop_down)
         adapter.addAll(Country.values().toList())
@@ -91,10 +87,10 @@ class AddressFieldLayout(context: Context, attrs: AttributeSet?) : ConstraintLay
     var removeButtonVisible = false
         set(value) {
             field = value
-            if (value) {
-                binding.btnRemoveField.visibility = View.VISIBLE
+            binding.btnRemoveField.visibility = if (value) {
+                View.VISIBLE
             } else {
-                binding.btnRemoveField.visibility = View.GONE
+                View.GONE
             }
         }
 

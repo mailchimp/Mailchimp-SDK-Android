@@ -11,8 +11,6 @@
 
 package com.mailchimp.sdk.api.model.mergefields
 
-import kotlin.String
-
 enum class Country(val countryName: String, val code: String) {
     USA("USA", "US"),
 
@@ -403,9 +401,9 @@ enum class Country(val countryName: String, val code: String) {
     SOUTH_AFRICA("South Africa", "ZA"),
 
     SOUTH_GEORGIA_AND_THE_SOUTH_SANDWICH_ISLANDS(
-    "South Georgia and the South Sandwich Islands",
-    "GS"
-),
+        "South Georgia and the South Sandwich Islands",
+        "GS"
+    ),
 
     SOUTH_KOREA("South Korea", "KR"),
 
