@@ -45,6 +45,6 @@ class AudienceSdkInitializeTests {
                 .isAutoTaggingEnabled(true)
                 .build()
 
-        Mailchimp.initialize(config)
+        Mailchimp.initialize(context, config)
     }
 }

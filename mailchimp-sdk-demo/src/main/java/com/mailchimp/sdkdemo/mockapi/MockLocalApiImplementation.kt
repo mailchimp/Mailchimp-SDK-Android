@@ -9,19 +9,9 @@
  * limitations under the License.
  */
 
-package com.mailchimp.sdk.core
+package com.mailchimp.sdkdemo.mockapi
 
-import com.mailchimp.sdk.core.di.CoreImplementation
-import org.junit.Assert.assertNotNull
-import org.junit.Test
+import com.mailchimp.sdk.api.di.ApiImplementation
+import okhttp3.EventListener
 
-class CoreImplementationTest {
-
-    @Test
-    fun testCanConstructCore() {
-        val coreImplementation = CoreImplementation()
-
-        // we cannot test accessing the dependencies because work manager does not play nicely with mocks
-        assertNotNull(coreImplementation)
-    }
-}
+class MockLocalApiImplementation(baseUrl: String, eventListener: EventListener) : ApiImplementation("irrelevant", baseUrl, eventListener, true)

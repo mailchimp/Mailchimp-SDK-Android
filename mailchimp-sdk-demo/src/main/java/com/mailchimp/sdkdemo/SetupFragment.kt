@@ -67,7 +67,7 @@ class SetupFragment : Fragment() {
                     .isDebugModeEnabled(binding.cbxDebug.isChecked)
                     .isAutoTaggingEnabled(binding.cbxAutotag.isChecked)
                     .build()
-            Mailchimp.initialize(configuration)
+            Mailchimp.initialize(requireContext(), configuration)
 
             goToHomeFragment()
         }
@@ -80,7 +80,7 @@ class SetupFragment : Fragment() {
                 .isAutoTaggingEnabled(binding.cbxAutotag.isChecked)
                 .build()
         val apiDependencies = MockApiImplementation()
-        val mockInjector = object : MailchimpInjector(configuration) {
+        val mockInjector = object : MailchimpInjector(requireContext(), configuration) {
             override val audienceDependencies: AudienceDependencies by lazy {
                 AudienceImplementation.initialize(
                     coreDependencies,

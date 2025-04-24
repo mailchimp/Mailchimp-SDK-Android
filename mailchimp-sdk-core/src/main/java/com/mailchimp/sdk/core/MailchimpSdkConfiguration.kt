@@ -20,7 +20,7 @@ import okhttp3.EventListener
  */
 class MailchimpSdkConfiguration private constructor(
     val sdkKey: String,
-    val shard: String,
+    val baseUrl: String,
     val context: Context,
     val debugModeEnabled: Boolean = false,
     val autoTaggingEnabled: Boolean = true,
@@ -36,6 +36,11 @@ class MailchimpSdkConfiguration private constructor(
      * @property sdkKey The SDK key which can be generated on the mailchimp website //TODO update this
      */
     class Builder(context: Context, private val sdkKey: String) {
+
+        companion object {
+            private const val BASE_SDK_URL_FORMAT = "https://%s.api.mailchimp.com/clientapi/1.0/"
+        }
+
         private var isDebugModeEnabled: Boolean = false
         private var isAutoTaggingEnabled: Boolean = true
         private var okHttpEventListener: EventListener? = null
@@ -62,8 +67,9 @@ class MailchimpSdkConfiguration private constructor(
         /**
          * Receives all analytics events from OkHttp client.
          *
-         * @param eventListener okhttp3.EventListener that receives metric events to monitor the
-         * quantity, size, and duration HTTP calls.
+         * @param eventListener EventListener that receives metric events to monitor the
+         * quantity, size, and duration HTTP calls.  Events are invoked on the thread that triggered
+         * the event (source: okhttp3.EventListener.canceled() documentation).
          */
         fun okHttpEventListener(eventListener: EventListener) = apply { this.okHttpEventListener = eventListener }
 
@@ -75,9 +81,12 @@ class MailchimpSdkConfiguration private constructor(
                 throw IllegalArgumentException("The provided SDK key is invalid. It should contain 1 dash.")
             }
 
+            val key = keyAndShard.first()
+            val shard = String.format(BASE_SDK_URL_FORMAT, keyAndShard.last())
+
             return MailchimpSdkConfiguration(
-                keyAndShard.first(),
-                keyAndShard.last(),
+                key,
+                shard,
                 this.context,
                 isDebugModeEnabled,
                 isAutoTaggingEnabled,

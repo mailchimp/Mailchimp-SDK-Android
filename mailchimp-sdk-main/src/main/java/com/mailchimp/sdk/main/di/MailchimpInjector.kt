@@ -11,6 +11,7 @@
 
 package com.mailchimp.sdk.main.di
 
+import android.content.Context
 import com.mailchimp.sdk.api.di.ApiDependencies
 import com.mailchimp.sdk.api.di.ApiImplementation
 import com.mailchimp.sdk.audience.di.AudienceDependencies
@@ -19,18 +20,18 @@ import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.core.di.CoreDependencies
 import com.mailchimp.sdk.core.di.CoreImplementation
 
-open class MailchimpInjector(private val configuration: MailchimpSdkConfiguration) {
+open class MailchimpInjector(private val context: Context, private val configuration: MailchimpSdkConfiguration) {
 
     open val audienceDependencies: AudienceDependencies by lazy {
         AudienceImplementation.initialize(coreDependencies, apiDependencies, configuration)
     }
     open val coreDependencies: CoreDependencies by lazy {
-        CoreImplementation()
+        CoreImplementation(context)
     }
     open val apiDependencies: ApiDependencies by lazy {
         ApiImplementation(
             configuration.sdkKey,
-            configuration.shard,
+            configuration.baseUrl,
             configuration.okHttpEventListener,
             configuration.debugModeEnabled
         )

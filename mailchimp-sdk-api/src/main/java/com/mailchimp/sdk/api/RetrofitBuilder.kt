@@ -17,13 +17,9 @@ import retrofit2.Retrofit
 
 class RetrofitBuilder {
 
-    companion object {
-        private const val BASE_SDK_URL_FORMAT = "https://%s.api.mailchimp.com/clientapi/1.0/"
-    }
-
-    fun createInstance(shard: String, converterFactory: Converter.Factory, okHttpClient: OkHttpClient): Retrofit {
+    fun createInstance(baseUrl: String, converterFactory: Converter.Factory, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(String.format(BASE_SDK_URL_FORMAT, shard))
+            .baseUrl(baseUrl)
             .addConverterFactory(converterFactory)
             .client(okHttpClient)
             .build()

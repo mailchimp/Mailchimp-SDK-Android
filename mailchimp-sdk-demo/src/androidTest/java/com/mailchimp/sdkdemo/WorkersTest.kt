@@ -40,7 +40,7 @@ class WorkersTest {
 
         val config = MailchimpSdkConfiguration.Builder(context.applicationContext, fakeSdkKey).build()
 
-        Mailchimp.initialize(config)
+        Mailchimp.initialize(context, config)
 
         val configuration =
             Configuration.Builder()

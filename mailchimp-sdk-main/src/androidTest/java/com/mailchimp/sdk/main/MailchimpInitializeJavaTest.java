@@ -18,6 +18,8 @@ import static org.mockito.Mockito.when;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.google.gson.Gson;
 import com.mailchimp.sdk.api.SdkWebService;
 import com.mailchimp.sdk.api.di.ApiDependencies;
@@ -30,6 +32,8 @@ import com.mailchimp.sdk.main.di.MailchimpInjector;
 import org.junit.Test;
 
 public class MailchimpInitializeJavaTest {
+
+    private final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @Test
     public void testMailchimpSdk() {
@@ -49,7 +53,7 @@ public class MailchimpInitializeJavaTest {
         when(mockCore.getWorkStatusProvider()).thenReturn(mock(WorkStatusProvider.class));
 
         MailchimpInjector injector =
-                new MailchimpMockInjector(mockCore, apiDependencies, configuration);
+                new MailchimpMockInjector(context, mockCore, apiDependencies, configuration);
         MailchimpMock mockSdk = new MailchimpMock(injector);
         MailchimpMock.Companion.setMock(mockSdk);
 

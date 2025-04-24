@@ -12,6 +12,8 @@
 package com.mailchimp.sdk.main
 
 import android.app.Application
+import android.content.Context
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.Gson
 import com.mailchimp.sdk.api.di.ApiDependencies
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
@@ -22,6 +24,8 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 class MailchimpInitializeTest {
+
+    private var context: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
     fun testMailchimpSdkWithMocks() {
@@ -37,7 +41,7 @@ class MailchimpInitializeTest {
         whenever(mockApp.applicationContext).thenReturn(mockApp)
 
         val sdkConfiguration = MailchimpSdkConfiguration.Builder(mockApp, "sdkKey-us1").build()
-        val mock = MailchimpMockInjector(mockCoreDependencies, mockApiDependencies, sdkConfiguration)
+        val mock = MailchimpMockInjector(context, mockCoreDependencies, mockApiDependencies, sdkConfiguration)
 
         val mockSdk = MailchimpMock(mock)
         MailchimpMock.setMock(mockSdk)

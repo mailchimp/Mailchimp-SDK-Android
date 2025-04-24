@@ -12,6 +12,7 @@
 package com.mailchimp.sdk.main
 
 import android.annotation.SuppressLint
+import android.content.Context
 import com.mailchimp.sdk.audience.AudienceSdkContract
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.main.di.MailchimpInjector
@@ -43,10 +44,10 @@ open class Mailchimp protected constructor(
          * @return The newly created instance of the [Mailchimp]
          */
         @JvmStatic
-        fun initialize(configuration: MailchimpSdkConfiguration): Mailchimp {
+        fun initialize(context: Context, configuration: MailchimpSdkConfiguration): Mailchimp {
             if (INSTANCE == null) {
                 INSTANCE =
-                    Mailchimp(MailchimpInjector(configuration))
+                    Mailchimp(MailchimpInjector(context, configuration))
                 INSTANCE!!.setupSdk(configuration.debugModeEnabled)
             }
             return INSTANCE!!

@@ -11,6 +11,7 @@
 
 package com.mailchimp.sdk.core.di
 
+import android.content.Context
 import androidx.work.WorkManager
 import com.mailchimp.sdk.api.di.Dependency
 import com.mailchimp.sdk.core.work.WorkManagerStatusProvider
@@ -22,9 +23,9 @@ interface CoreDependencies {
     val workStatusProvider: WorkStatusProvider
 }
 
-class CoreImplementation : CoreDependencies {
+class CoreImplementation(context: Context) : CoreDependencies {
     override val workProcessor by lazy { WorkProcessor(workManager) }
     override val workStatusProvider by Dependency { WorkManagerStatusProvider(workProcessor) }
 
-    private val workManager by lazy { WorkManager.getInstance() }
+    private val workManager by lazy { WorkManager.getInstance(context) }
 }

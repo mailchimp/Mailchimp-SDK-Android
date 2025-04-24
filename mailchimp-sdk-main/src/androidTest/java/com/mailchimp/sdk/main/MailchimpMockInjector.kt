@@ -11,13 +11,15 @@
 
 package com.mailchimp.sdk.main
 
+import android.content.Context
 import com.mailchimp.sdk.api.di.ApiDependencies
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
 import com.mailchimp.sdk.core.di.CoreDependencies
 import com.mailchimp.sdk.main.di.MailchimpInjector
 
 class MailchimpMockInjector(
+    context: Context,
     override val coreDependencies: CoreDependencies,
     override val apiDependencies: ApiDependencies,
     configuration: MailchimpSdkConfiguration
-) : MailchimpInjector(configuration)
+) : MailchimpInjector(context, configuration)

@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder
 import com.mailchimp.sdk.api.ApiAuthInterceptor
 import com.mailchimp.sdk.api.RetrofitBuilder
 import com.mailchimp.sdk.api.SdkWebService
+import com.mailchimp.sdk.api.SslHelper
 import com.mailchimp.sdk.api.gson.BasicGsonTypeDecoder
 import com.mailchimp.sdk.api.gson.GsonInterfaceAdapter
 import com.mailchimp.sdk.api.model.mergefields.Address
@@ -34,7 +35,12 @@ interface ApiDependencies {
     val gson: Gson
 }
 
-open class ApiImplementation(private val sdkKey: String, private val shard: String, private val okHttpEventListener: EventListener?, private val isDebug: Boolean) :
+open class ApiImplementation(
+    private val sdkKey: String,
+    private val baseUrl: String,
+    private val okHttpEventListener: EventListener?,
+    private val isDebug: Boolean
+) :
     ApiDependencies {
     override val gson: Gson by lazy {
         GsonBuilder().registerTypeAdapter(
@@ -57,6 +63,7 @@ open class ApiImplementation(private val sdkKey: String, private val shard: Stri
             okHttpEventListener?.let { eventListener(it) }
             if (isDebug) {
                 addInterceptor(okHttpLoggingInterceptor)
+                sslSocketFactory(SslHelper.clientSslSocketFactory, SslHelper.clientTrustManager)
             }
         }.build()
     }
@@ -64,7 +71,7 @@ open class ApiImplementation(private val sdkKey: String, private val shard: Stri
     private val gsonConverterFactory: GsonConverterFactory by lazy { GsonConverterFactory.create(gson) }
     private val retrofit: Retrofit by lazy {
         RetrofitBuilder().createInstance(
-            shard,
+            baseUrl,
             gsonConverterFactory,
             okHttpClient
         )

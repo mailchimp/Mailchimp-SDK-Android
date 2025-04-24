@@ -52,9 +52,9 @@ android {
         unitTests.returnDefaultValues = true
     }
 
-//    packagingOptions {
-//        resources.merges.add("META-INF/*")
-//    }
+    packagingOptions {
+        resources.merges.add("META-INF/*")
+    }
 
     namespace 'com.mailchimp.sdkdemo'
 }
@@ -88,6 +88,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation "androidx.work:work-testing:$work_version"
-    androidTestImplementation "io.mockk:mockk:1.14.0"
+    androidTestImplementation "io.mockk:mockk-android:1.14.0"
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
 
 }

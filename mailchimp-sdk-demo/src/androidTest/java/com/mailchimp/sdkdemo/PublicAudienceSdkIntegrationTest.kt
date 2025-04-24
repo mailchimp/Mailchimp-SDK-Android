@@ -12,12 +12,8 @@
 package com.mailchimp.sdkdemo
 
 import android.content.Context
-import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.work.Configuration
 import androidx.work.WorkManager
-import androidx.work.impl.utils.SynchronousExecutor
-import androidx.work.testing.TestWorkerBuilder
 import androidx.work.testing.WorkManagerTestInitHelper
 import com.mailchimp.sdk.api.di.ApiImplementation
 import com.mailchimp.sdk.api.model.ApiContact
@@ -27,7 +23,6 @@ import com.mailchimp.sdk.api.model.ContactStatus
 import com.mailchimp.sdk.api.model.mergefields.Address
 import com.mailchimp.sdk.api.model.mergefields.Country
 import com.mailchimp.sdk.api.model.mergefields.StringMergeFieldValue
-import com.mailchimp.sdk.audience.AudienceWorker
 import com.mailchimp.sdk.audience.di.AudienceDependencies
 import com.mailchimp.sdk.audience.di.AudienceImplementation
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
@@ -39,10 +34,6 @@ import com.mailchimp.sdkdemo.mockapi.MockGenericCallBackend
 import com.mailchimp.sdkdemo.mockapi.MockMailchimp
 import com.mailchimp.sdkdemo.mockapi.MockMailchimpAudienceBackend
 import com.mailchimp.sdkdemo.mockapi.MockSdkWebService
-import io.mockk.mockk
-import io.mockk.verify
-import okhttp3.Call
-import okhttp3.Connection
 import okhttp3.EventListener
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert
@@ -69,19 +60,9 @@ class PublicAudienceSdkIntegrationTest {
     fun setup() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
         executor = Executors.newSingleThreadExecutor()
-        setupWorkManager(context)
-        setupMockAudienceSdk(context)
-    }
-
-    private fun setupWorkManager(context: Context) {
-        val config =
-            Configuration.Builder()
-                .setMinimumLoggingLevel(Log.DEBUG)
-                .setExecutor(SynchronousExecutor())
-                .build()
-        WorkManagerTestInitHelper.initializeTestWorkManager(context, config)
         workManager = WorkManager.getInstance(context)
-        workManager.pruneWork()
+        TestUtils.setupWorkManager(context)
+        setupMockAudienceSdk(context)
     }
 
     private fun setupMockAudienceSdk(context: Context, autotagging: Boolean = false, eventListener: EventListener = object : EventListener() { }, debugMode: Boolean = false) {
@@ -95,7 +76,7 @@ class PublicAudienceSdkIntegrationTest {
         val mockApiImplementation = MockApiImplementation()
         mockAudienceBackend = mockApiImplementation.audienceBackend
         mockGenericCallBackend = mockApiImplementation.mockGenericCallBackend
-        val mockInjector = object : MailchimpInjector(configuration) {
+        val mockInjector = object : MailchimpInjector(context, configuration) {
             override val apiDependencies: ApiImplementation = mockApiImplementation
             override val audienceDependencies: AudienceDependencies by lazy {
                 AudienceImplementation.initialize(coreDependencies, apiDependencies, configuration, override = true)
