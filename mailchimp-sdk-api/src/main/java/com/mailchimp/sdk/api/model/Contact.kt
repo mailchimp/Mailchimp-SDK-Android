@@ -21,7 +21,7 @@ import com.mailchimp.sdk.api.model.mergefields.StringMergeFieldValue
  * A Contact represents one member of your Audience. This is used for creating or updating a
  * contact. See [Contact.Builder] for more detailed instructions for constructing a contact.
  */
-@Suppress("DataClassPrivateConstructor")
+@ConsistentCopyVisibility
 data class Contact private constructor(
     /**
      * The contacts email address.

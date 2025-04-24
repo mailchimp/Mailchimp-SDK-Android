@@ -46,7 +46,7 @@ class WorkManagerStatusProviderTest {
     @Test
     fun testGetStatusById() {
         val workId = UUID.randomUUID()
-        val workInfo = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
+        val workInfo = WorkInfo(workId, WorkInfo.State.SUCCEEDED, setOf(), workDataOf(), Data.EMPTY, 0, 0)
         whenever(processor.getWorkById(workId)).thenReturn(workInfo)
 
         val statusProvider = WorkManagerStatusProvider(processor)
@@ -59,7 +59,7 @@ class WorkManagerStatusProviderTest {
     fun testGetStatusByIdLiveData() {
         val workId = UUID.randomUUID()
         val workInfoLiveData = MutableLiveData<WorkInfo>()
-        workInfoLiveData.value = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
+        workInfoLiveData.value = WorkInfo(workId, WorkInfo.State.SUCCEEDED, setOf(), workDataOf(), Data.EMPTY, 0, 0)
         whenever(processor.getWorkByIdLiveData(workId)).thenReturn(workInfoLiveData)
 
         val statusProvider = WorkManagerStatusProvider(processor)
@@ -82,7 +82,7 @@ class WorkManagerStatusProviderTest {
 
     private fun testMapping(workInfoState: WorkInfo.State, expectedStatus: WorkStatus) {
         val workId = UUID.randomUUID()
-        val workInfo = WorkInfo(workId, workInfoState, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
+        val workInfo = WorkInfo(workId, workInfoState, setOf(), workDataOf(), Data.EMPTY, 0, 0)
         whenever(processor.getWorkById(workId)).thenReturn(workInfo)
 
         val statusProvider = WorkManagerStatusProvider(processor)

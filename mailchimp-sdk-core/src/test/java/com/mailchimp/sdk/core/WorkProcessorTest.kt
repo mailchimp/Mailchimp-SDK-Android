@@ -52,7 +52,7 @@ class WorkProcessorTest {
     @Test
     fun testSubmitWorkWithPrecedingRunningTask() {
         val workId = UUID.randomUUID()
-        val workInfo = WorkInfo(workId, WorkInfo.State.RUNNING, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
+        val workInfo = WorkInfo(workId, WorkInfo.State.RUNNING, setOf(), workDataOf(), Data.EMPTY, 0, 0)
         val future = TestableListenableFuture(listOf(workInfo))
 
         whenever(workManager.getWorkInfosForUniqueWork(anyString())).thenReturn(future)
@@ -80,7 +80,7 @@ class WorkProcessorTest {
     @Test
     fun testSubmitWorkWithPrecedingFinishedTask() {
         val workId = UUID.randomUUID()
-        val workInfo = WorkInfo(workId, WorkInfo.State.SUCCEEDED, workDataOf(), emptyList(), Data.EMPTY, 0, 0)
+        val workInfo = WorkInfo(workId, WorkInfo.State.SUCCEEDED, setOf(), workDataOf(), Data.EMPTY, 0, 0)
         val future = TestableListenableFuture(listOf(workInfo))
 
         whenever(workManager.getWorkInfosForUniqueWork(anyString())).thenReturn(future)
@@ -170,7 +170,7 @@ class WorkProcessorTest {
 
     @Test
     fun testGetWorkById() {
-        val mockFuture = mock<ListenableFuture<WorkInfo>>()
+        val mockFuture = mock<ListenableFuture<WorkInfo?>>()
         val mockData = mock<WorkInfo>()
         val workId = UUID.randomUUID()
 

@@ -23,7 +23,7 @@ import com.google.gson.annotations.SerializedName
  * @property country [Country] (ex. [Country.USA]): Optional
  * @property zip Zip (ex. 30308): Required
  */
-@Suppress("DataClassPrivateConstructor")
+@ConsistentCopyVisibility
 data class Address private constructor(
     @SerializedName("addr1")
     val addressLineOne: String?,

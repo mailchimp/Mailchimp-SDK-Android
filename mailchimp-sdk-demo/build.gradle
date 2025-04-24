@@ -53,7 +53,7 @@ android {
     }
 
     packagingOptions {
-        resources.merges.add("META-INF/*")
+        resources.excludes.add("META-INF/*")
     }
 
     namespace 'com.mailchimp.sdkdemo'
