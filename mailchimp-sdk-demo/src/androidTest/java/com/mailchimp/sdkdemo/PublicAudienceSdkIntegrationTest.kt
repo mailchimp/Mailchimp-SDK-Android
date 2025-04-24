@@ -17,6 +17,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import androidx.work.impl.utils.SynchronousExecutor
+import androidx.work.testing.TestWorkerBuilder
 import androidx.work.testing.WorkManagerTestInitHelper
 import com.mailchimp.sdk.api.di.ApiImplementation
 import com.mailchimp.sdk.api.model.ApiContact
@@ -26,6 +27,7 @@ import com.mailchimp.sdk.api.model.ContactStatus
 import com.mailchimp.sdk.api.model.mergefields.Address
 import com.mailchimp.sdk.api.model.mergefields.Country
 import com.mailchimp.sdk.api.model.mergefields.StringMergeFieldValue
+import com.mailchimp.sdk.audience.AudienceWorker
 import com.mailchimp.sdk.audience.di.AudienceDependencies
 import com.mailchimp.sdk.audience.di.AudienceImplementation
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
@@ -37,6 +39,11 @@ import com.mailchimp.sdkdemo.mockapi.MockGenericCallBackend
 import com.mailchimp.sdkdemo.mockapi.MockMailchimp
 import com.mailchimp.sdkdemo.mockapi.MockMailchimpAudienceBackend
 import com.mailchimp.sdkdemo.mockapi.MockSdkWebService
+import io.mockk.mockk
+import io.mockk.verify
+import okhttp3.Call
+import okhttp3.Connection
+import okhttp3.EventListener
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert
 import org.junit.Assert.assertEquals
@@ -46,6 +53,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.util.UUID
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class PublicAudienceSdkIntegrationTest {
 
@@ -54,10 +63,12 @@ class PublicAudienceSdkIntegrationTest {
     private lateinit var mockGenericCallBackend: MockGenericCallBackend
     private lateinit var workManager: WorkManager
     private lateinit var context: Context
+    private lateinit var executor: Executor
 
     @Before
     fun setup() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
+        executor = Executors.newSingleThreadExecutor()
         setupWorkManager(context)
         setupMockAudienceSdk(context)
     }
@@ -73,11 +84,12 @@ class PublicAudienceSdkIntegrationTest {
         workManager.pruneWork()
     }
 
-    private fun setupMockAudienceSdk(context: Context, autotagging: Boolean = false, debugMode: Boolean = false) {
+    private fun setupMockAudienceSdk(context: Context, autotagging: Boolean = false, eventListener: EventListener = object : EventListener() { }, debugMode: Boolean = false) {
         val sdkKey = "FakeSdkKey-us1"
         val configuration =
             MailchimpSdkConfiguration.Builder(context.applicationContext, sdkKey)
                 .isAutoTaggingEnabled(autotagging)
+                .okHttpEventListener(eventListener)
                 .isDebugModeEnabled(debugMode)
                 .build()
         val mockApiImplementation = MockApiImplementation()

@@ -15,11 +15,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 35
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,12 +32,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
 
     testOptions {
@@ -53,7 +53,7 @@ dependencies {
     implementation project(':mailchimp-sdk-core')
     implementation project(':mailchimp-sdk-api')
 
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation 'com.google.code.gson:gson:2.10.1'
@@ -63,10 +63,10 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "androidx.work:work-testing:$work_version"
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:5.4.0"
 
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation "androidx.work:work-testing:$work_version"
 }

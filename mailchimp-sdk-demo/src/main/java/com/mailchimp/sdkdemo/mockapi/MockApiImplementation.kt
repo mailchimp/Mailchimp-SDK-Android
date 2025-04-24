@@ -13,7 +13,7 @@ package com.mailchimp.sdkdemo.mockapi
 
 import com.mailchimp.sdk.api.di.ApiImplementation
 
-class MockApiImplementation : ApiImplementation("irrelevant", "irrelevant", true) {
+class MockApiImplementation : ApiImplementation("irrelevant", "irrelevant", null, true) {
     override val sdkWebService by lazy { MockSdkWebService(audienceBackend, mockGenericCallBackend) }
 
     val audienceBackend by lazy { MockMailchimpAudienceBackend() }

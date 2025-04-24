@@ -15,11 +15,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 35
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -34,12 +34,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
 
     testOptions {
@@ -54,20 +54,21 @@ dependencies {
 
     implementation project(path: ':mailchimp-sdk-api')
 
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.core:core-ktx:1.16.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     implementation "androidx.work:work-runtime-ktx:$work_version"
     implementation 'com.jakewharton.timber:timber:5.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.3.1'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
+    testImplementation 'org.mockito:mockito-core:5.12.0'
+    testImplementation "org.mockito.kotlin:mockito-kotlin:5.4.0"
     testImplementation 'androidx.arch.core:core-testing:2.2.0'
 
     androidTestImplementation "androidx.work:work-testing:$work_version"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }

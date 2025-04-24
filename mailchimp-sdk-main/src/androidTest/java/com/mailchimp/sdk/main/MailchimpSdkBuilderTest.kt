@@ -14,6 +14,7 @@ package com.mailchimp.sdk.main
 import android.app.Application
 import android.content.Context
 import com.mailchimp.sdk.core.MailchimpSdkConfiguration
+import okhttp3.EventListener
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Test
@@ -56,5 +57,16 @@ class MailchimpSdkBuilderTest {
         assertEquals(appContext, config.context)
         assertEquals(myDebugMode, config.debugModeEnabled)
         assertEquals(myAutoTagEnabled, config.autoTaggingEnabled)
+    }
+
+    @Test
+    fun mailchimpSdkBuilderHasOkHttpEventListenerTest() {
+        whenever(context.applicationContext).thenReturn(appContext)
+        val eventListener = object : EventListener() { }
+        val builder = MailchimpSdkConfiguration.Builder(context, "mysdk-us1").okHttpEventListener(eventListener)
+
+        val config = builder.build()
+
+        assertEquals(eventListener, config.okHttpEventListener)
     }
 }

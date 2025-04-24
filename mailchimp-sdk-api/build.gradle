@@ -15,11 +15,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 35
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,12 +32,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
 
     testOptions {
@@ -52,9 +52,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.3.1'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
+    testImplementation 'org.mockito:mockito-core:5.12.0'
+    testImplementation "org.mockito.kotlin:mockito-kotlin:5.4.0"
 }

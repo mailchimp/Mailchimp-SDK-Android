@@ -21,6 +21,7 @@ import com.mailchimp.sdk.api.gson.GsonInterfaceAdapter
 import com.mailchimp.sdk.api.model.mergefields.Address
 import com.mailchimp.sdk.api.model.mergefields.MergeFieldValue
 import com.mailchimp.sdk.api.model.mergefields.StringMergeFieldValue
+import okhttp3.EventListener
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -33,7 +34,7 @@ interface ApiDependencies {
     val gson: Gson
 }
 
-open class ApiImplementation(private val sdkKey: String, private val shard: String, private val isDebug: Boolean) :
+open class ApiImplementation(private val sdkKey: String, private val shard: String, private val okHttpEventListener: EventListener?, private val isDebug: Boolean) :
     ApiDependencies {
     override val gson: Gson by lazy {
         GsonBuilder().registerTypeAdapter(
@@ -51,12 +52,13 @@ open class ApiImplementation(private val sdkKey: String, private val shard: Stri
     }
     private val apiAuthorizationInterceptor by Dependency { ApiAuthInterceptor(sdkKey) }
     private val okHttpClient by lazy {
-        val builder = OkHttpClient.Builder()
-        builder.addInterceptor(apiAuthorizationInterceptor)
-        if (isDebug) {
-            builder.addInterceptor(okHttpLoggingInterceptor)
-        }
-        builder.build()
+        OkHttpClient.Builder().apply {
+            addInterceptor(apiAuthorizationInterceptor)
+            okHttpEventListener?.let { eventListener(it) }
+            if (isDebug) {
+                addInterceptor(okHttpLoggingInterceptor)
+            }
+        }.build()
     }
 
     private val gsonConverterFactory: GsonConverterFactory by lazy { GsonConverterFactory.create(gson) }

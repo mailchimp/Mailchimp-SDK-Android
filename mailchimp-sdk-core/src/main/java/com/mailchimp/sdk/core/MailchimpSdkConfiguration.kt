@@ -12,6 +12,7 @@
 package com.mailchimp.sdk.core
 
 import android.content.Context
+import okhttp3.EventListener
 
 /**
  * The MailchimpSdkConfiguration class configures the [Mailchimp] settings.
@@ -22,7 +23,8 @@ class MailchimpSdkConfiguration private constructor(
     val shard: String,
     val context: Context,
     val debugModeEnabled: Boolean = false,
-    val autoTaggingEnabled: Boolean = true
+    val autoTaggingEnabled: Boolean = true,
+    val okHttpEventListener: EventListener? = null
 ) {
 
     /**
@@ -36,6 +38,7 @@ class MailchimpSdkConfiguration private constructor(
     class Builder(context: Context, private val sdkKey: String) {
         private var isDebugModeEnabled: Boolean = false
         private var isAutoTaggingEnabled: Boolean = true
+        private var okHttpEventListener: EventListener? = null
         private val context: Context = context.applicationContext
 
         /**
@@ -56,6 +59,14 @@ class MailchimpSdkConfiguration private constructor(
          */
         fun isAutoTaggingEnabled(enabled: Boolean) = apply { this.isAutoTaggingEnabled = enabled }
 
+        /**
+         * Receives all analytics events from OkHttp client.
+         *
+         * @param eventListener okhttp3.EventListener that receives metric events to monitor the
+         * quantity, size, and duration HTTP calls.
+         */
+        fun okHttpEventListener(eventListener: EventListener) = apply { this.okHttpEventListener = eventListener }
+
         fun build(): MailchimpSdkConfiguration {
 
             // SDK key format is "key-shard"
@@ -69,7 +80,8 @@ class MailchimpSdkConfiguration private constructor(
                 keyAndShard.last(),
                 this.context,
                 isDebugModeEnabled,
-                isAutoTaggingEnabled
+                isAutoTaggingEnabled,
+                okHttpEventListener
             )
         }
     }

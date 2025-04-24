@@ -12,6 +12,7 @@
 package com.mailchimp.sdk.core.work
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import androidx.work.ExistingWorkPolicy
 import androidx.work.Operation
 import androidx.work.WorkInfo
@@ -53,6 +54,7 @@ open class WorkProcessor(private val workManager: WorkManager) {
      */
     fun getWorkById(id: UUID): WorkInfo {
         return workManager.getWorkInfoById(id).get()
+            ?: throw UnknownWorkException(id)
     }
 
     /**
@@ -63,7 +65,9 @@ open class WorkProcessor(private val workManager: WorkManager) {
      * @return A livedata,  WorkInfo that will update at each status change.
      */
     fun getWorkByIdLiveData(id: UUID): LiveData<WorkInfo> {
-        return workManager.getWorkInfoByIdLiveData(id)
+        return workManager.getWorkInfoByIdLiveData(id).map {
+            it ?: throw UnknownWorkException(id)
+        }
     }
 
     /**
@@ -87,4 +91,6 @@ open class WorkProcessor(private val workManager: WorkManager) {
     fun getWorkByNameLiveData(name: String): LiveData<List<WorkInfo>> {
         return workManager.getWorkInfosForUniqueWorkLiveData(name)
     }
+
+    class UnknownWorkException(id: UUID) : Exception("Unknown work for id: $id")
 }

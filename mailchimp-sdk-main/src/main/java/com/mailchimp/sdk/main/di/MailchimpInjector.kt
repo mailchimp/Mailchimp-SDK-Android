@@ -31,6 +31,7 @@ open class MailchimpInjector(private val configuration: MailchimpSdkConfiguratio
         ApiImplementation(
             configuration.sdkKey,
             configuration.shard,
+            configuration.okHttpEventListener,
             configuration.debugModeEnabled
         )
     }

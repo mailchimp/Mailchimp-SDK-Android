@@ -61,6 +61,6 @@ class WorkersTest {
         workManager.enqueue(createOrUpdateRequest).result.get()
 
         val workInfo = workManager.getWorkInfoById(createOrUpdateRequest.id).get()
-        assertThat(workInfo.state, `is`(WorkInfo.State.SUCCEEDED))
+        assertThat(workInfo?.state, `is`(WorkInfo.State.SUCCEEDED))
     }
 }

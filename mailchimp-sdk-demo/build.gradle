@@ -16,12 +16,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.mailchimp.sdkdemo"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -40,17 +40,22 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
 
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
+//    packagingOptions {
+//        resources.merges.add("META-INF/*")
+//    }
+
     namespace 'com.mailchimp.sdkdemo'
 }
 
@@ -63,10 +68,10 @@ dependencies {
     implementation project(':mailchimp-sdk-main')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation "androidx.viewpager2:viewpager2:1.1.0"
+    implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
 
@@ -77,10 +82,12 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.3.1'
+    testImplementation 'org.mockito:mockito-core:5.12.0'
 
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation "androidx.work:work-testing:$work_version"
+    androidTestImplementation "io.mockk:mockk:1.14.0"
+
 }

@@ -11,9 +11,11 @@
 
 package com.mailchimp.sdk.core.work
 
+import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import androidx.work.WorkInfo
+import timber.log.Timber
 import java.util.UUID
 
 interface WorkStatusProvider {
@@ -42,8 +44,7 @@ class WorkManagerStatusProvider(private val workProcessor: WorkProcessor) : Work
     }
 
     override fun getStatusByIdLiveData(uuid: UUID): LiveData<WorkStatus> {
-        val workInfoLiveData = workProcessor.getWorkByIdLiveData(uuid)
-        return Transformations.map(workInfoLiveData, this::mapInfoToWorkStatus)
+        return workProcessor.getWorkByIdLiveData(uuid).map(::mapInfoToWorkStatus)
     }
 
     private fun mapInfoToWorkStatus(workInfo: WorkInfo): WorkStatus {
