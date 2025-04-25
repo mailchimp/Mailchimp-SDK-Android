@@ -12,7 +12,11 @@
 package com.mailchimp.sdk.core
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
@@ -27,6 +31,7 @@ import com.mailchimp.sdk.core.work.SdkWorker
 import com.mailchimp.sdk.core.work.WorkProcessor
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
@@ -34,12 +39,16 @@ import org.mockito.MockitoAnnotations.openMocks
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import java.util.UUID
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
 class WorkProcessorTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var workManager: WorkManager
@@ -157,15 +166,32 @@ class WorkProcessorTest {
 
     @Test
     fun testGetWorkByIdLiveData() {
-        val mockData = mock<LiveData<WorkInfo>>()
+        val data = MutableLiveData<WorkInfo?>()
         val workId = UUID.randomUUID()
+        val expected = WorkInfo(
+            workId,
+            WorkInfo.State.SUCCEEDED,
+            setOf(),
+            Data.Builder().build(),
+            Data.Builder().build(),
+            1,
+            1,
+            Constraints.Builder().build(),
+            0,
+            null,
+            0,
+            0
+        )
+        data.value = expected
 
-        whenever(workManager.getWorkInfoByIdLiveData(workId)).thenReturn(mockData)
+        whenever(workManager.getWorkInfoByIdLiveData(workId)).thenReturn(data)
 
         val workProcessor = WorkProcessor(workManager)
         val result = workProcessor.getWorkByIdLiveData(workId)
 
-        assertEquals(mockData, result)
+        val observer = mock<Observer<WorkInfo>>()
+        result.observeForever(observer)
+        verify(observer).onChanged(expected)
     }
 
     @Test
